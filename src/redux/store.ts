@@ -1,10 +1,12 @@
+import { menuReducer } from './slices/menuSlice';
 import { favoritesReducer } from './slices/favoritesSlice';
 import { configureStore } from "@reduxjs/toolkit";
 
 
 const store = configureStore({
   reducer: {
-    favoritesReducer
+    favoritesReducer,
+    menuReducer
   }
 })
 

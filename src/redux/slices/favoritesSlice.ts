@@ -1,4 +1,4 @@
-import { ItemAtFavorites } from './../../types/menuItems';
+import { ItemAtFavorites } from '../../types/weeklyMenuApiData';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState: ItemAtFavorites[] = []
