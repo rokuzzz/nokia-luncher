@@ -16,11 +16,11 @@ export interface Meta {
 }
 
 export interface MenuOfTheDay{
-  date: DayOfTheWeek,
-  courses: Course[],
+  date: string,
+  courses: Course,
 }
 
-export type DayOfTheWeek = 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday'
+// export type DayOfTheWeek = 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday'
 
 // export interface Courses {
 //   1: Course

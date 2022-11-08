@@ -10,7 +10,7 @@ beforeEach(() => {
 describe('test menu reducer', () => {
   test('fetch weekly menu in eng', async () => {
     await store.dispatch(fetchWeeklyMenuEn())
-    console.log(store.getState().menuReducer.weeklyMenuEn.mealdates[0])
+    // console.log(store.getState().menuReducer.weeklyMenuEn.mealdates[0].courses[2])
     expect(store.getState().menuReducer.weeklyMenuEn.mealdates.length).toBeGreaterThan(2)
   })
 })
