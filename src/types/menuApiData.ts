@@ -1,12 +1,18 @@
-export interface WeeklyMenu {
+export interface MenuApiData {
   weeklyMenuEn: WeeklyMenuApiData,
-  weeklyMenuFi: WeeklyMenuApiData
+  weeklyMenuFi: WeeklyMenuApiData,
+  dailyMenuEn: DailyMenuApiData
 }
 
 export interface WeeklyMenuApiData {
   meta: Meta,
   timeperiod: string,
   mealdates: MenuOfTheDay[]
+}
+
+export interface DailyMenuApiData {
+  meta: Meta,
+  courses: Course
 }
 
 export interface Meta {
