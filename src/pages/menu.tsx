@@ -8,6 +8,7 @@ import {
   fetchWeeklyMenuEn,
   fetchWeeklyMenuFi,
 } from '../redux/slices/menuSlice';
+import { Course, MenuItem } from '../types/menuApiData';
 
 export default function Menu() {
   useEffect(() => {
@@ -55,13 +56,38 @@ export default function Menu() {
   ));
   
   // for(let i = 0; i < ;)
+  function countCourses(courses : Course | null) {
+    if(courses != null) {
+      return Object.keys(courses).length;
+    } else {
+      return 0
+    }
+  }
+
+  function populateCourseList(courses: Course | null) {
+    let meals: MenuItem[] = []
+    if(courses != null) {
+      for(let i = 1; i <= countCourses(courses); i++) {
+        meals.push(courses[i])
+      }
+      return meals
+    } else {
+      return meals;
+    }
+  }
+  const meals = populateCourseList(dailyMenuEn.courses).map((meal) =>
+    <li>{meal.title_en}</li>
+  )
 
   return (
     <>
       <h1>Menu</h1>
       {renderButtons}
-      
-      {/* {console.log(dailyMenuEn.courses?.[1].title_en)} */}
+      <Typography>
+        {countCourses(dailyMenuEn.courses)}
+      </Typography>
+      <ul>{meals}</ul>
+      {console.log(populateCourseList(dailyMenuEn.courses))}
     </>
   );
 }
