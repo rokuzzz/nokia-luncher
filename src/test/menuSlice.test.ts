@@ -16,7 +16,7 @@ describe('test menu reducer', () => {
   })
   test('fetch daily menu in eng', async () => {
     await store.dispatch(fetchDailyMenuEn('2022-11-15'))
-    console.log(store.getState().menuReducer.dailyMenuEn.courses[1])
-    expect(store.getState().menuReducer.dailyMenuEn).toBeDefined()
+    // console.log(store.getState().menuReducer.dailyMenuEn.courses)
+    expect(store.getState().menuReducer.dailyMenuEn.courses).toBeDefined()
   })
 })

@@ -1,5 +1,5 @@
 import { MenuApiData } from '../../types/menuApiData';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const initialState: MenuApiData = {
@@ -28,7 +28,7 @@ const initialState: MenuApiData = {
       ref_title: ''
     },
     courses: {}
-  }
+  },
 }
 
 export const fetchWeeklyMenuEn = createAsyncThunk(
@@ -70,7 +70,9 @@ export const fetchDailyMenuEn = createAsyncThunk(
 const menuSlice = createSlice({
   name: 'menu slice',
   initialState: initialState,
-  reducers: {},
+  reducers: {
+
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchWeeklyMenuEn.fulfilled, (state, action) => {
       state.weeklyMenuEn = action.payload
