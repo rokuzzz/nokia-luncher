@@ -1,12 +1,18 @@
-export interface WeeklyMenu {
+export interface MenuApiData {
   weeklyMenuEn: WeeklyMenuApiData,
-  weeklyMenuFi: WeeklyMenuApiData
+  weeklyMenuFi: WeeklyMenuApiData,
+  dailyMenuEn: DailyMenuApiData,
 }
 
 export interface WeeklyMenuApiData {
   meta: Meta,
   timeperiod: string,
   mealdates: MenuOfTheDay[]
+}
+
+export interface DailyMenuApiData {
+  meta: Meta,
+  courses: Course | null
 }
 
 export interface Meta {
@@ -17,7 +23,7 @@ export interface Meta {
 
 export interface MenuOfTheDay{
   date: string,
-  courses: Course,
+  courses: Course[] | null,
 }
 
 // export type DayOfTheWeek = 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday'
@@ -30,9 +36,9 @@ export interface MenuOfTheDay{
 //   5: Course
 // }
 
-type Course = {
+export type Course = {
   [key: string]: MenuItem
-} 
+}
 
 // export type Course = MenuItem
 

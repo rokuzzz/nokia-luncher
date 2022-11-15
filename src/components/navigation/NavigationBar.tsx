@@ -3,10 +3,11 @@ import {
   AppBar,
   Slide,
   Toolbar,
+  Typography,
   useScrollTrigger,
 } from '@mui/material';
 
-import { ReactComponent as NokiaLogo } from '../../assets/nokia-logo.svg'
+import { ReactComponent as NokiaLogo } from '../../assets/nokia-logo.svg';
 import HamburgerMenu from './HamburgerMenu';
 
 interface Props {
@@ -23,7 +24,6 @@ function HideOnScroll({ children }: Props) {
 }
 
 function NavigationBar() {
-  
   return (
     <HideOnScroll>
       <AppBar
@@ -34,7 +34,7 @@ function NavigationBar() {
         <Toolbar>
           <HamburgerMenu />
           <NokiaLogo width={'100'} />
-
+          {/* <Typography sx={{background: 'black'}}>Luncher</Typography> */}
         </Toolbar>
       </AppBar>
     </HideOnScroll>
