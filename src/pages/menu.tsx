@@ -53,14 +53,14 @@ export default function Menu() {
       {date.toString().slice(0, 3)}
     </Button>
   ));
-  
-  // for(let i = 0; i < ;)
 
   return (
     <>
       <h1>Menu</h1>
       {renderButtons}
-      
+      <Typography>
+        {dailyMenuEn.courses?.[1].title_en}
+      </Typography>
       {/* {console.log(dailyMenuEn.courses?.[1].title_en)} */}
     </>
   );
