@@ -6,22 +6,13 @@ import {
   RouterProvider,
   Routes,
 } from 'react-router-dom';
+
+import theme from './theme';
+
 import NavigationBar from './components/navigation/NavigationBar';
 import Favorites from './pages/favorites';
 import Menu from './pages/menu';
-
-const theme = createTheme({
-  // TODO !!
-  // palette: {
-  //   primary: {
-  //     main: 'SOME_COLOR'
-  //   }
-  // }
-  zIndex: {
-    appBar: 1251,
-    modal: 1250,
-  },
-});
+import Error from './pages/error';
 
 function App() {
   useEffect(() => {
@@ -35,7 +26,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Menu />} />
         <Route path='/favorites' element={<Favorites />} />
-        {/* <Route path='*' element={<PageNotFound/>} /> */}
+        <Route path='*' element={<Error/>} />
       </Routes>
     </ThemeProvider>
   );

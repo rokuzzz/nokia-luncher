@@ -1,13 +1,24 @@
-import { Button, Typography } from '@mui/material';
-import { stringify } from 'querystring';
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Divider,
+  IconButton,
+  List,
+  ListItem,
+  ListItemText,
+  Typography,
+} from '@mui/material';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../hooks/appHook';
 import {
   fetchDailyMenuEn,
   fetchWeeklyMenuEn,
   fetchWeeklyMenuFi,
 } from '../redux/slices/menuSlice';
+import { MenuComponentBox } from '../styles/menu';
+import { Course, MenuItem } from '../types/menuApiData';
 
 export default function Menu() {
   useEffect(() => {
@@ -54,14 +65,71 @@ export default function Menu() {
     </Button>
   ));
 
+  function countCourses(courses: Course | null) {
+    if (courses != null) {
+      return Object.keys(courses).length;
+    } else {
+      return 0;
+    }
+  }
+
+  function populateCourseList(courses: Course | null) {
+    let meals: MenuItem[] = [];
+    if (courses != null) {
+      for (let i = 1; i <= countCourses(courses); i++) {
+        meals.push(courses[i]);
+      }
+      return meals;
+    } else {
+      return meals;
+    }
+  }
+  const renderMenuContent = populateCourseList(dailyMenuEn.courses).map(
+    (meal) => (
+      <Box key={meal.category}>
+        <Box
+          display={'flex'}
+          sx={{ pt: 2, pb: 2 }}
+          alignItems={'start'}
+          justifyContent={'space-between'}
+        >
+          <Box display={'flex'} flexDirection={'column'}>
+            <Typography> {meal.category} </Typography>
+            <Typography> {meal.title_en} </Typography>
+            <Typography> {meal.price} </Typography>
+          </Box>
+          <IconButton>
+            <FavoriteBorderIcon />
+          </IconButton>
+        </Box>
+        <Divider />
+      </Box>
+    )
+  );
+
   return (
-    <>
-      <h1>Menu</h1>
-      {renderButtons}
-      <Typography>
-        {dailyMenuEn.courses?.[1].title_en}
-      </Typography>
-      {/* {console.log(dailyMenuEn.courses?.[1].title_en)} */}
-    </>
+    <MenuComponentBox margin={'auto'}>
+      <Typography variant='h3'>{dailyMenuEn.meta.ref_title}</Typography>
+      <Box
+        display={'flex'}
+        justifyContent={'center'}
+        alignContent={'center'}
+        sx={{mt: 4, mb: 4}}
+      >
+        <ButtonGroup variant='contained'>{renderButtons}</ButtonGroup>
+      </Box>
+      {renderMenuContent}
+      {/* <List>
+        {populateCourseList(dailyMenuEn.courses).map((meal) => (
+          <>
+            <ListItem>
+              <Typography>{meal.category}</Typography>
+              <Typography>{meal.title_en}</Typography>
+            </ListItem>
+            <Divider />
+          </>
+        ))}
+      </List> */}
+    </MenuComponentBox>
   );
 }
