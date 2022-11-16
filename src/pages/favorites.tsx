@@ -5,9 +5,17 @@ import {
   ListItem,
   Divider,
   ListItemText,
+  Box,
+  ButtonGroup,
+  IconButton,
 } from "@mui/material";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import { Link } from "react-router-dom";
+import { MenuComponentBox } from "../styles/menu";
 import { Course, MenuItem } from '../types/menuApiData';
+
+import React, { useState } from "react";
 
 const style = {
   width: "100%",
@@ -16,7 +24,6 @@ const style = {
 };
 
 export default function Favorites() {
-
   let parsedJSON = require('../mockdata.json')
   let favoriteMeals: MenuItem[] = [parsedJSON]
 
@@ -26,14 +33,34 @@ export default function Favorites() {
     </ListItem>
   )
 
+  const renderFavoriteContent = favoriteMeals.map(
+    (meal) => (
+      <Box key={meal.category}>
+        <Box
+          display={'flex'}
+          sx={{ pt: 2, pb: 2 }}
+          alignItems={'start'}
+          justifyContent={'space-between'}
+        >
+          <Box display={'flex'} flexDirection={'column'}>
+            <Typography> {meal.title_en} </Typography>
+            <Typography> {meal.price} </Typography>
+          </Box>
+          <IconButton>
+            <FavoriteBorderIcon />
+          </IconButton>
+        </Box>
+        <Divider />
+      </Box>
+    )
+  );
+
   return (
-    <Container maxWidth="lg">
-      <Typography variant="h4" mt={2} width="100%">
+    <MenuComponentBox margin={'auto'}>
+      <Typography variant='h3'>
         Favorites
       </Typography>
-      <List>
-        {meals}
-      </List>
-    </Container>
+      {renderFavoriteContent}
+    </MenuComponentBox>
   );
 }
