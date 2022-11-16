@@ -69,6 +69,7 @@ export default function Menu() {
     if(courses != null) {
       for(let i = 1; i <= countCourses(courses); i++) {
         meals.push(courses[i])
+        console.log(courses[i])
       }
       return meals
     } else {
@@ -87,7 +88,6 @@ export default function Menu() {
         {countCourses(dailyMenuEn.courses)}
       </Typography>
       <ul>{meals}</ul>
-      {console.log(populateCourseList(dailyMenuEn.courses))}
     </>
   );
 }

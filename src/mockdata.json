@@ -1,0 +1,25 @@
+{
+    "title_fi": "Paahdettua turskaa ja sitruunaa, kermaviilikastiketta ja tilliperunoita",
+    "title_en": "Roasted cod and lemon, sour cream sauce and dill potatoes",
+    "category": "FAVORITES",
+    "additionalDietInfo": {
+        "allergens": "Fish, Milk"
+    },
+    "price": "7,15 € / 9,15 €",
+    "recipes": {
+        "0": {
+            "name": "SITRUUNARUOHO PAISTETTU TURSKA",
+            "ingredients": [],
+            "nutrients": "Energia/Energy: 348.86 kJ | Energia/Energy: 83.10 kcal | Rasva/Fat: 0.75 g | Hiilihydraatit/Carbohydrate: 0.29 g | Proteiinit/Protein: 18.52 g | Kuidut/Fibre: 0.10 g | Suola/Salt: 0.56 g"
+        },
+        "1": {
+            "name": "LÄMMIN KASVISSALAATTI",
+            "ingredients": [],
+            "nutrients": "Energia/Energy: 267.76 kJ | Energia/Energy: 64.57 kcal | Rasva/Fat: 4.23 g | Hiilihydraatit/Carbohydrate: 3.99 g | Proteiinit/Protein: 1.39 g | Kuidut/Fibre: 2.09 g | Suola/Salt: 0.85 g"
+        },
+        "hideAll": {
+            "dietcodes": "G, M"
+        }
+    }
+}
+

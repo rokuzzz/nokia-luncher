@@ -7,6 +7,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import { Link } from "react-router-dom";
+import { Course, MenuItem } from '../types/menuApiData';
 
 const style = {
   width: "100%",
@@ -15,26 +16,23 @@ const style = {
 };
 
 export default function Favorites() {
+
+  let parsedJSON = require('../mockdata.json')
+  let favoriteMeals: MenuItem[] = [parsedJSON]
+
+  const meals = favoriteMeals.map((meal) =>
+    <ListItem>
+      {meal.title_en}
+    </ListItem>
+  )
+
   return (
     <Container maxWidth="lg">
       <Typography variant="h4" mt={2} width="100%">
         Favorites
       </Typography>
-      <List sx={style} component="nav" aria-label="mailbox folders">
-        <ListItem button>
-          <ListItemText primary="Inbox" />
-        </ListItem>
-        <Divider />
-        <ListItem button divider>
-          <ListItemText primary="Drafts" />
-        </ListItem>
-        <ListItem button>
-          <ListItemText primary="Trash" />
-        </ListItem>
-        <Divider light />
-        <ListItem button>
-          <ListItemText primary="Spam" />
-        </ListItem>
+      <List>
+        {meals}
       </List>
     </Container>
   );
