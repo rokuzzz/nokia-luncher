@@ -13,7 +13,7 @@ import NavigationBar from './components/navigation/NavigationBar';
 import Favorites from './pages/favorites';
 import Menu from './pages/menu';
 import Error from './pages/error';
-import Heatmap from './pages/heatmap';
+import RestaurantInfo from './pages/restaurantInfo';
 
 function App() {
   useEffect(() => {
@@ -27,7 +27,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Menu />} />
         <Route path='/favorites' element={<Favorites />} />
-        <Route path='/heatmap' element={<Heatmap />} />
+        <Route path='/info' element={<RestaurantInfo />} />
         <Route path='*' element={<Error/>} />
       </Routes>
     </ThemeProvider>
