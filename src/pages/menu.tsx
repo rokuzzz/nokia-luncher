@@ -4,13 +4,12 @@ import {
   ButtonGroup,
   Divider,
   IconButton,
-  List,
-  ListItem,
-  ListItemText,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks/appHook';
 import {
   fetchDailyMenuEn,
@@ -35,27 +34,45 @@ export default function Menu() {
 
   const dispatch = useAppDispatch();
 
-  // const renderMealdates = weeklyMenuEn.mealdates.map((menuOfTheDay) => (
-  //   <Button>{menuOfTheDay.date}</Button>
-  // ));
+  const theme = useTheme();
+  const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
 
-  interface CurrentWeek {
-    days: string[];
-    dates: string[];
+  const [currWeek, setCurrWeek] = useState(1);
+
+  // let currDate = new Date();
+  // let currWeek = [];
+
+  // for (let i = 1; i <= 5; i++) {
+  //   let first = currDate.getDate() - currDate.getDay() + i;
+  //   let date = new Date(currDate.setDate(first));
+
+  //   currWeek.push(date);
+  // }
+
+  // let nextWeekDate = new Date();
+  // nextWeekDate.setDate(nextWeekDate.getDate() + 7);
+  // let nextWeek = [];
+
+  // for (let i = 1; i <= 5; i++) {
+  //   let first = nextWeekDate.getDate() - nextWeekDate.getDay() + i;
+  //   let date = new Date(nextWeekDate.setDate(first));
+
+  //   nextWeek.push(date);
+  // }
+
+  function getWeekFromStartDay(start: number) {
+    const weekDays = [];
+    const curr = new Date(); // get current date
+    const first = curr.getDate() - curr.getDay() + start;
+
+    for (let i = first; i < first + 5; i++) {
+      let day = new Date(curr.setDate(i));
+      weekDays.push(day);
+    }
+    return weekDays;
   }
 
-  let currDate = new Date();
-  let currWeek = [];
-
-  for (let i = 1; i <= 5; i++) {
-    let first = currDate.getDate() - currDate.getDay() + i;
-    let date = new Date(currDate.setDate(first));
-    // let date = new Date(currDate.setDate(first)).toISOString().slice(0, 10)
-
-    currWeek.push(date);
-  }
-
-  const renderButtons = currWeek.map((date) => (
+  const renderButtons = getWeekFromStartDay(currWeek).map((date) => (
     <Button
       onClick={() =>
         dispatch(fetchDailyMenuEn(date.toISOString().slice(0, 10)))
@@ -94,7 +111,7 @@ export default function Menu() {
           justifyContent={'space-between'}
         >
           <Box display={'flex'} flexDirection={'column'}>
-            <Typography> {meal.category} </Typography>
+            <Typography sx={{ opacity: '50%' }}> {meal.category} </Typography>
             <Typography> {meal.title_en} </Typography>
             <Typography> {meal.price} </Typography>
           </Box>
@@ -109,27 +126,50 @@ export default function Menu() {
 
   return (
     <MenuComponentBox margin={'auto'}>
-      <Typography variant='h3'>{dailyMenuEn.meta.ref_title}</Typography>
+      <Typography
+        variant='h3'
+        display={'flex'}
+        justifyContent={'center'}
+        alignContent={'center'}
+        sx={{
+          mt: 2,
+        }}
+      >
+        {dailyMenuEn.meta.ref_title}
+      </Typography>
       <Box
         display={'flex'}
         justifyContent={'center'}
         alignContent={'center'}
-        sx={{mt: 4, mb: 4}}
+        sx={{ mt: 5 }}
       >
-        <ButtonGroup variant='contained'>{renderButtons}</ButtonGroup>
+        <ButtonGroup
+          variant='outlined'
+          size={isSmall ? 'small' : 'large'}
+          aria-label='large button group'
+        >
+          {currWeek == 1 ? (
+            <>
+              {renderButtons}
+              <Button onClick={() => setCurrWeek(currWeek + 7)}>
+                Next week
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button
+                onClick={() => {
+                  setCurrWeek(currWeek - 7);
+                }}
+              >
+                Previous week
+              </Button>
+              {renderButtons}
+            </>
+          )}
+        </ButtonGroup>
       </Box>
-      {renderMenuContent}
-      {/* <List>
-        {populateCourseList(dailyMenuEn.courses).map((meal) => (
-          <>
-            <ListItem>
-              <Typography>{meal.category}</Typography>
-              <Typography>{meal.title_en}</Typography>
-            </ListItem>
-            <Divider />
-          </>
-        ))}
-      </List> */}
+      <Box sx={{}}>{renderMenuContent}</Box>
     </MenuComponentBox>
   );
 }
