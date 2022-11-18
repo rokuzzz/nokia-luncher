@@ -36,6 +36,7 @@ export default function Menu() {
 
   const theme = useTheme();
   const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
+  const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
 
   const [currWeek, setCurrWeek] = useState(1);
 
@@ -104,7 +105,7 @@ export default function Menu() {
   const renderMenuContent = populateCourseList(dailyMenuEn.courses).map(
     (meal) => (
       <Box key={meal.category}>
-        <Box
+        <Box maxWidth={isDownMedium ? '100%' : '65%'}
           display={'flex'}
           sx={{ pt: 2, pb: 2 }}
           alignItems={'start'}
@@ -145,7 +146,7 @@ export default function Menu() {
   return (
     <MenuComponentBox margin={'auto'}>
       <Typography
-        variant='h4'
+        variant='h5'
         display={'flex'}
         justifyContent={'center'}
         alignContent={'center'}
