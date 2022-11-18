@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import {
   AppBar,
+  Box,
   Slide,
   Toolbar,
   Typography,
+  useMediaQuery,
   useScrollTrigger,
+  useTheme,
 } from '@mui/material';
 
 import { ReactComponent as NokiaLogo } from '../../assets/nokia-logo.svg';
@@ -24,6 +27,8 @@ function HideOnScroll({ children }: Props) {
 }
 
 function NavigationBar() {
+  const theme = useTheme();
+  const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
   return (
     <HideOnScroll>
       <AppBar
@@ -33,7 +38,9 @@ function NavigationBar() {
       >
         <Toolbar>
           <HamburgerMenu />
-          <NokiaLogo width={'100'} />
+          <Box display={'flex'} alignContent={'center'} sx={ isSmall ? {margin: 'auto'} : {ml: 2}} >
+            <NokiaLogo width={'100'} />
+          </Box>
           {/* <Typography sx={{background: 'black'}}>Luncher</Typography> */}
         </Toolbar>
       </AppBar>

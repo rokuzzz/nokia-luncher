@@ -4,15 +4,15 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
-} from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../hooks/appHook";
+} from '@mui/material';
+import { useAppDispatch, useAppSelector } from '../hooks/appHook';
 import {
   fetchDailyMenuEn,
   fetchWeeklyMenuEn,
   fetchWeeklyMenuFi,
-} from "../redux/slices/menuSlice";
-import { MenuComponentBox } from "../styles/menu";
-import { useEffect, useState } from "react";
+} from '../redux/slices/menuSlice';
+import { MenuComponentBox } from '../styles/menu';
+import { useEffect, useState } from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -21,9 +21,9 @@ import {
   Title,
   Tooltip,
   Legend,
-} from "chart.js";
-import { Bar } from "react-chartjs-2";
-import { faker } from "@faker-js/faker";
+} from 'chart.js';
+import { Bar } from 'react-chartjs-2';
+import { faker } from '@faker-js/faker';
 
 ChartJS.register(
   CategoryScale,
@@ -35,7 +35,7 @@ ChartJS.register(
 );
 
 export const options = {
-  indexAxis: "x" as const,
+  indexAxis: 'x' as const,
   elements: {
     bar: {
       borderWidth: 2,
@@ -44,31 +44,31 @@ export const options = {
   responsive: true,
   plugins: {
     legend: {
-      position: "bottom" as const,
+      position: 'bottom' as const,
     },
     title: {
       display: true,
-      text: "Popular times",
+      text: 'Popular times',
     },
   },
 };
 
-const labels = ["11:00", "11:30", "12:00", "12:30", "13:00", "13:30"];
+const labels = ['11:00', '11:30', '12:00', '12:30', '13:00', '13:30'];
 
 export const data = {
   labels,
   datasets: [
     {
-      label: "Predicted",
+      label: 'Predicted',
       data: labels.map(() => faker.datatype.number({ min: 0, max: 200 })),
-      borderColor: "rgb(255, 99, 132)",
-      backgroundColor: "rgba(255, 99, 132, 0.5)",
+      borderColor: 'rgb(255, 99, 132)',
+      backgroundColor: 'rgba(255, 99, 132, 0.5)',
     },
     {
-      label: "Fulfilled",
+      label: 'Fulfilled',
       data: labels.map(() => faker.datatype.number({ min: 0, max: 200 })),
-      borderColor: "rgb(53, 162, 235)",
-      backgroundColor: "rgba(53, 162, 235, 0.5)",
+      borderColor: 'rgb(53, 162, 235)',
+      backgroundColor: 'rgba(53, 162, 235, 0.5)',
     },
   ],
 };
@@ -89,7 +89,7 @@ export default function RestaurantInfo() {
   const dispatch = useAppDispatch();
 
   const theme = useTheme();
-  const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+  const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [currWeek, setCurrWeek] = useState(1);
 
@@ -106,20 +106,28 @@ export default function RestaurantInfo() {
   }
 
   const renderButtons = getWeekFromStartDay(currWeek).map((date) => (
-    <Button onClick={() => 
-    updateChart()
-    // console.log(ChartJS.instances[1].data)
-    }>
+    <Button
+      onClick={
+        () => updateChart()
+        // console.log(ChartJS.instances[1].data)
+      }
+    >
       {date.toString().slice(0, 3)}
     </Button>
   ));
 
   function updateChart() {
-    for(let i = 0; i <= 6; i++) {
-      ChartJS.instances[1].data.datasets[0].data[i] = faker.datatype.number({ min: 0, max: 200 })
+    for (let i = 0; i <= 6; i++) {
+      ChartJS.instances[1].data.datasets[0].data[i] = faker.datatype.number({
+        min: 0,
+        max: 200,
+      });
     }
-    for(let i = 0; i <= 6; i++) {
-      ChartJS.instances[1].data.datasets[1].data[i] = faker.datatype.number({ min: 0, max: 200 })
+    for (let i = 0; i <= 6; i++) {
+      ChartJS.instances[1].data.datasets[1].data[i] = faker.datatype.number({
+        min: 0,
+        max: 200,
+      });
     }
     // ChartJS.instances[1].data.datasets[0].data.forEach(element => {
     //   console.log(element)
@@ -130,10 +138,10 @@ export default function RestaurantInfo() {
   }
 
   return (
-    <MenuComponentBox margin={"auto"}>
-      <Typography variant="h3">Info</Typography>
+    <MenuComponentBox margin={'auto'}>
+      <Typography variant='h3'>Info</Typography>
       <Bar options={options} data={data} redraw={true} />
-      <ButtonGroup variant="contained">{renderButtons}</ButtonGroup>
+      <ButtonGroup variant='contained'>{renderButtons}</ButtonGroup>
     </MenuComponentBox>
   );
 }

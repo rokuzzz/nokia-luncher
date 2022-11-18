@@ -127,12 +127,13 @@ export default function Menu() {
   return (
     <MenuComponentBox margin={'auto'}>
       <Typography
-        variant='h3'
+        variant='h4'
         display={'flex'}
         justifyContent={'center'}
         alignContent={'center'}
         sx={{
-          mt: 2,
+          mt: 3,
+          fontWeight: '700'
         }}
       >
         {dailyMenuEn.meta.ref_title}
@@ -141,7 +142,7 @@ export default function Menu() {
         display={'flex'}
         justifyContent={'center'}
         alignContent={'center'}
-        sx={{ mt: 5 }}
+        sx={{ mt: 2 }}
       >
         <ButtonGroup
           variant='outlined'
