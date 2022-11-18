@@ -111,9 +111,27 @@ export default function Menu() {
           justifyContent={'space-between'}
         >
           <Box display={'flex'} flexDirection={'column'}>
-            <Typography sx={{ opacity: '50%' }}> {meal.category} </Typography>
-            <Typography> {meal.title_en} </Typography>
-            <Typography> {meal.price} </Typography>
+            <Typography
+              variant='body2'
+              sx={{
+                textTransform: 'uppercase',
+                opacity: '55%',
+              }}
+            >
+              {meal.category}
+            </Typography>
+            <Typography
+              variant='subtitle2'
+              sx={{ fontWeight: '600', lineHeight: '1.3' }}
+            >
+              {meal.title_en}
+            </Typography>
+            <Typography variant='subtitle1'>
+              {meal.price.split('/')[0]}
+            </Typography>
+            <Typography variant='subtitle1'>
+              {meal.price.split('/')[1]}
+            </Typography>
           </Box>
           <IconButton>
             <FavoriteBorderIcon />
@@ -133,7 +151,7 @@ export default function Menu() {
         alignContent={'center'}
         sx={{
           mt: 3,
-          fontWeight: '700'
+          fontWeight: '800',
         }}
       >
         {dailyMenuEn.meta.ref_title}
