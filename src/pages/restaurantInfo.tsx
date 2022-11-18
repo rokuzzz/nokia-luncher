@@ -1,16 +1,10 @@
 import {
-  Box,
   Button,
   ButtonGroup,
-  Divider,
-  IconButton,
-  List,
-  ListItem,
-  ListItemText,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../hooks/appHook";
 import {
   fetchDailyMenuEn,
@@ -18,8 +12,7 @@ import {
   fetchWeeklyMenuFi,
 } from "../redux/slices/menuSlice";
 import { MenuComponentBox } from "../styles/menu";
-import { Course, MenuItem } from "../types/menuApiData";
-import React from "react";
+import { useEffect, useState } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -81,64 +74,66 @@ export const data = {
 };
 
 export default function RestaurantInfo() {
-  // useEffect(() => {
-  //   dispatch(fetchWeeklyMenuEn());
-  //   dispatch(fetchWeeklyMenuFi());
+  useEffect(() => {
+    dispatch(fetchWeeklyMenuEn());
+    dispatch(fetchWeeklyMenuFi());
 
-  //   const today = new Date();
-  //   dispatch(fetchDailyMenuEn(today.toISOString().slice(0, 10)));
-  // }, []);
+    const today = new Date();
+    dispatch(fetchDailyMenuEn(today.toISOString().slice(0, 10)));
+  }, []);
 
-  // const { weeklyMenuEn, weeklyMenuFi, dailyMenuEn } = useAppSelector(
-  //   (state) => state.menuReducer
-  // );
+  const { weeklyMenuEn, weeklyMenuFi, dailyMenuEn } = useAppSelector(
+    (state) => state.menuReducer
+  );
 
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
-  // interface CurrentWeek {
-  //   days: string[];
-  //   dates: string[];
-  // }
+  const theme = useTheme();
+  const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
 
-  // const weekday = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
-  // const today = new Date();
-  // let currentWeekday = weekday[today.getDay()];
+  const [currWeek, setCurrWeek] = useState(1);
 
-  // for (let i = 1; i <= 5; i++) {
-  //   let first = currDate.getDate() - currDate.getDay() + i;
-  //   let date = new Date(currDate.setDate(first));
-  //   // let date = new Date(currDate.setDate(first)).toISOString().slice(0, 10)
+  function getWeekFromStartDay(start: number) {
+    const weekDays = [];
+    const curr = new Date(); // get current date
+    const first = curr.getDate() - curr.getDay() + start;
 
-  //   currWeek.push(date);
-  // }
+    for (let i = first; i < first + 5; i++) {
+      let day = new Date(curr.setDate(i));
+      weekDays.push(day);
+    }
+    return weekDays;
+  }
 
-//   function getWeekFromStartDay(start: number) {
-//     const weekDays = [];
-//     const curr = new Date(); // get current date
-//     const first = curr.getDate() - curr.getDay() + start;
+  const renderButtons = getWeekFromStartDay(currWeek).map((date) => (
+    <Button onClick={() => 
+    updateChart()
+    // console.log(ChartJS.instances[1].data)
+    }>
+      {date.toString().slice(0, 3)}
+    </Button>
+  ));
 
-//     for (let i = first; i < first + 5; i++) {
-//       let day = new Date(curr.setDate(i));
-//       weekDays.push(day);
-//     }
-//     return weekDays;
-//   }
-
-//   const renderButtons = getWeekFromStartDay(currWeek).map((date) => (
-//     <Button
-//       onClick={() =>
-//         dispatch(fetchDailyMenuEn(date.toISOString().slice(0, 10)))
-//       }
-//     >
-//       {date.toString().slice(0, 3)}
-//     </Button>
-//   ));
+  function updateChart() {
+    for(let i = 0; i <= 6; i++) {
+      ChartJS.instances[1].data.datasets[0].data[i] = faker.datatype.number({ min: 0, max: 200 })
+    }
+    for(let i = 0; i <= 6; i++) {
+      ChartJS.instances[1].data.datasets[1].data[i] = faker.datatype.number({ min: 0, max: 200 })
+    }
+    // ChartJS.instances[1].data.datasets[0].data.forEach(element => {
+    //   console.log(element)
+    //   element = faker.datatype.number({ min: 0, max: 200 })
+    // });
+    // ChartJS.instances[1].data.datasets[0].data[0] = faker.datatype.number({ min: 0, max: 200 })
+    ChartJS.instances[1].update();
+  }
 
   return (
     <MenuComponentBox margin={"auto"}>
       <Typography variant="h3">Info</Typography>
-      {/* <ButtonGroup variant='contained'>{renderButtons}</ButtonGroup> */}
-      <Bar options={options} data={data} />
+      <Bar options={options} data={data} redraw={true} />
+      <ButtonGroup variant="contained">{renderButtons}</ButtonGroup>
     </MenuComponentBox>
   );
 }
