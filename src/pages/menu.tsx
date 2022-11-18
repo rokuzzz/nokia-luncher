@@ -40,27 +40,6 @@ export default function Menu() {
 
   const [currWeek, setCurrWeek] = useState(1);
 
-  // let currDate = new Date();
-  // let currWeek = [];
-
-  // for (let i = 1; i <= 5; i++) {
-  //   let first = currDate.getDate() - currDate.getDay() + i;
-  //   let date = new Date(currDate.setDate(first));
-
-  //   currWeek.push(date);
-  // }
-
-  // let nextWeekDate = new Date();
-  // nextWeekDate.setDate(nextWeekDate.getDate() + 7);
-  // let nextWeek = [];
-
-  // for (let i = 1; i <= 5; i++) {
-  //   let first = nextWeekDate.getDate() - nextWeekDate.getDay() + i;
-  //   let date = new Date(nextWeekDate.setDate(first));
-
-  //   nextWeek.push(date);
-  // }
-
   function getWeekFromStartDay(start: number) {
     const weekDays = [];
     const curr = new Date(); // get current date
