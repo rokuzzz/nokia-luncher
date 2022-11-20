@@ -11,26 +11,17 @@ import {
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks/appHook';
-import {
-  fetchDailyMenuEn,
-  fetchWeeklyMenuEn,
-  fetchWeeklyMenuFi,
-} from '../redux/slices/menuSlice';
+import { fetchDailyMenuEn } from '../redux/slices/menuSlice';
 import { MenuComponentBox } from '../styles/menu';
 import { Course, MenuItem } from '../types/menuApiData';
 
 export default function Menu() {
   useEffect(() => {
-    dispatch(fetchWeeklyMenuEn());
-    dispatch(fetchWeeklyMenuFi());
-
     const today = new Date();
     dispatch(fetchDailyMenuEn(today.toISOString().slice(0, 10)));
   }, []);
 
-  const { weeklyMenuEn, weeklyMenuFi, dailyMenuEn } = useAppSelector(
-    (state) => state.menuReducer
-  );
+  const { dailyMenuEn } = useAppSelector((state) => state.menuReducer);
 
   const dispatch = useAppDispatch();
 
@@ -84,7 +75,8 @@ export default function Menu() {
   const renderMenuContent = populateCourseList(dailyMenuEn.courses).map(
     (meal) => (
       <Box key={meal.category}>
-        <Box maxWidth={isDownMedium ? '100%' : '65%'}
+        <Box
+          maxWidth={isDownMedium ? '100%' : '65%'}
           display={'flex'}
           sx={{ pt: 2, pb: 2 }}
           alignItems={'start'}
@@ -113,9 +105,11 @@ export default function Menu() {
               {meal.price.split('/')[1]}
             </Typography>
           </Box>
-          <IconButton>
-            <FavoriteBorderIcon />
-          </IconButton>
+          <Box margin={'auto 0'}>
+            <IconButton>
+              <FavoriteBorderIcon />
+            </IconButton>
+          </Box>
         </Box>
         <Divider />
       </Box>
@@ -143,7 +137,7 @@ export default function Menu() {
         sx={{ mt: 2 }}
       >
         <ButtonGroup
-          variant='outlined'
+          variant='contained'
           size={isSmall ? 'small' : 'large'}
           aria-label='large button group'
         >

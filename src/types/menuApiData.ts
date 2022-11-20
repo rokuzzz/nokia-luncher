@@ -1,6 +1,6 @@
-export interface MenuApiData {
-  weeklyMenuEn: WeeklyMenuApiData,
-  weeklyMenuFi: WeeklyMenuApiData,
+export interface MenuState {
+  // weeklyMenuEn: WeeklyMenuApiData,
+  // weeklyMenuFi: WeeklyMenuApiData,
   dailyMenuEn: DailyMenuApiData,
 }
 

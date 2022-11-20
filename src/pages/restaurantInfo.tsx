@@ -6,11 +6,7 @@ import {
   useTheme,
 } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../hooks/appHook';
-import {
-  fetchDailyMenuEn,
-  fetchWeeklyMenuEn,
-  fetchWeeklyMenuFi,
-} from '../redux/slices/menuSlice';
+import { fetchDailyMenuEn } from '../redux/slices/menuSlice';
 import { MenuComponentBox } from '../styles/menu';
 import { useEffect, useState } from 'react';
 import {
@@ -75,16 +71,11 @@ export const data = {
 
 export default function RestaurantInfo() {
   useEffect(() => {
-    dispatch(fetchWeeklyMenuEn());
-    dispatch(fetchWeeklyMenuFi());
-
     const today = new Date();
     dispatch(fetchDailyMenuEn(today.toISOString().slice(0, 10)));
   }, []);
 
-  const { weeklyMenuEn, weeklyMenuFi, dailyMenuEn } = useAppSelector(
-    (state) => state.menuReducer
-  );
+  const { dailyMenuEn } = useAppSelector((state) => state.menuReducer);
 
   const dispatch = useAppDispatch();
 
