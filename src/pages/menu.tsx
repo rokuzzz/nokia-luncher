@@ -7,17 +7,19 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
-} from '@mui/material';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../hooks/appHook';
+} from "@mui/material";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../hooks/appHook";
 import {
   fetchDailyMenuEn,
   fetchWeeklyMenuEn,
   fetchWeeklyMenuFi,
-} from '../redux/slices/menuSlice';
-import { MenuComponentBox } from '../styles/menu';
-import { Course, MenuItem } from '../types/menuApiData';
+} from "../redux/slices/menuSlice";
+import { MenuComponentBox } from "../styles/menu";
+import { Course, MenuItem } from "../types/menuApiData";
+import { Link } from "react-router-dom";
 
 export default function Menu() {
   useEffect(() => {
@@ -35,7 +37,7 @@ export default function Menu() {
   const dispatch = useAppDispatch();
 
   const theme = useTheme();
-  const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
+  const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [currWeek, setCurrWeek] = useState(1);
 
@@ -105,13 +107,13 @@ export default function Menu() {
     (meal) => (
       <Box key={meal.category}>
         <Box
-          display={'flex'}
+          display={"flex"}
           sx={{ pt: 2, pb: 2 }}
-          alignItems={'start'}
-          justifyContent={'space-between'}
+          alignItems={"start"}
+          justifyContent={"space-between"}
         >
-          <Box display={'flex'} flexDirection={'column'}>
-            <Typography sx={{ opacity: '50%' }}> {meal.category} </Typography>
+          <Box display={"flex"} flexDirection={"column"}>
+            <Typography sx={{ opacity: "50%" }}> {meal.category} </Typography>
             <Typography> {meal.title_en} </Typography>
             <Typography> {meal.price} </Typography>
           </Box>
@@ -125,12 +127,12 @@ export default function Menu() {
   );
 
   return (
-    <MenuComponentBox margin={'auto'}>
+    <MenuComponentBox margin={"auto"}>
       <Typography
-        variant='h3'
-        display={'flex'}
-        justifyContent={'center'}
-        alignContent={'center'}
+        variant="h3"
+        display={"flex"}
+        justifyContent={"center"}
+        alignContent={"center"}
         sx={{
           mt: 2,
         }}
@@ -138,15 +140,15 @@ export default function Menu() {
         {dailyMenuEn.meta.ref_title}
       </Typography>
       <Box
-        display={'flex'}
-        justifyContent={'center'}
-        alignContent={'center'}
+        display={"flex"}
+        justifyContent={"center"}
+        alignContent={"center"}
         sx={{ mt: 5 }}
       >
         <ButtonGroup
-          variant='outlined'
-          size={isSmall ? 'small' : 'large'}
-          aria-label='large button group'
+          variant="outlined"
+          size={isSmall ? "small" : "large"}
+          aria-label="large button group"
         >
           {currWeek == 1 ? (
             <>
@@ -168,6 +170,26 @@ export default function Menu() {
             </>
           )}
         </ButtonGroup>
+      </Box>
+      <Box
+        display={"flex"}
+        justifyContent={"end"}
+        alignContent={"center"}
+        sx={{ mt: 5 }}
+      >
+        <IconButton style={{ margin: "0" }}>
+          <Link
+            to="/info"
+            style={{
+              textDecoration: "none",
+              color: "inherit",
+              fontSize: "0px",
+            }}
+          >
+            {" "}
+            <InfoOutlinedIcon></InfoOutlinedIcon>
+          </Link>
+        </IconButton>
       </Box>
       <Box sx={{}}>{renderMenuContent}</Box>
     </MenuComponentBox>

@@ -56,18 +56,71 @@ export const options = {
 
 const labels = ["11:00", "11:30", "12:00", "12:30", "13:00", "13:30"];
 
+const minVisitors = 10
+const maxVisitors = 300
+const lowEstimate = 0.25
+const medEstimate = 0.5
+const highEstimate = 0.75
+const rushEstimate = 1
+
 export const data = {
   labels,
   datasets: [
     {
       label: "Predicted",
-      data: labels.map(() => faker.datatype.number({ min: 0, max: 200 })),
+      data: labels.map( time => {
+        // make more realistic data by having dailyVisitiors multiplied by settings
+        if (time == "11:00") {
+          return faker.datatype.number({ min: minVisitors, max: maxVisitors*lowEstimate })
+        }
+        if (time == "11:30") {
+          return faker.datatype.number({ min: maxVisitors*highEstimate, max: maxVisitors*rushEstimate })
+        }
+        if (time == "12:00") {
+          return faker.datatype.number({ min: maxVisitors*medEstimate, max: maxVisitors*highEstimate })
+        }
+        if (time == "12:30") {
+          return faker.datatype.number({ min: maxVisitors*lowEstimate, max: maxVisitors*medEstimate })
+        }
+        if (time == "13:00") {
+          return faker.datatype.number({ min: minVisitors, max: maxVisitors*lowEstimate })
+        }
+        if (time == "13:30") {
+          return faker.datatype.number({ min: minVisitors, max: maxVisitors*lowEstimate })
+        }
+         else {
+          return faker.datatype.number({ min: minVisitors, max: maxVisitors })
+        }
+      }),
       borderColor: "rgb(255, 99, 132)",
       backgroundColor: "rgba(255, 99, 132, 0.5)",
     },
     {
       label: "Fulfilled",
-      data: labels.map(() => faker.datatype.number({ min: 0, max: 200 })),
+      data: labels.map( time => {
+        // make more realistic data by having dailyVisitiors multiplied by settings
+        if (time == "11:00") {
+          return faker.datatype.number({ min: minVisitors, max: maxVisitors*lowEstimate })
+        }
+        if (time == "11:30") {
+          return faker.datatype.number({ min: maxVisitors*highEstimate, max: maxVisitors*rushEstimate })
+        }
+        if (time == "12:00") {
+          return faker.datatype.number({ min: maxVisitors*medEstimate, max: maxVisitors*highEstimate })
+        }
+        if (time == "12:30") {
+          return faker.datatype.number({ min: maxVisitors*lowEstimate, max: maxVisitors*medEstimate })
+        }
+        if (time == "13:00") {
+          return faker.datatype.number({ min: minVisitors, max: maxVisitors*lowEstimate })
+        }
+        if (time == "13:30") {
+          return faker.datatype.number({ min: minVisitors, max: maxVisitors*lowEstimate })
+        }
+         else {
+          return faker.datatype.number({ min: minVisitors, max: maxVisitors })
+        }
+      }),
       borderColor: "rgb(53, 162, 235)",
       backgroundColor: "rgba(53, 162, 235, 0.5)",
     },
