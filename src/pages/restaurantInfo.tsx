@@ -1,6 +1,7 @@
 import {
   Button,
   ButtonGroup,
+  Container,
   Typography,
   useMediaQuery,
   useTheme,
@@ -108,7 +109,6 @@ export default function RestaurantInfo() {
   const renderButtons = getWeekFromStartDay(currWeek).map((date) => (
     <Button onClick={() => 
     updateChart()
-    // console.log(ChartJS.instances[1].data)
     }>
       {date.toString().slice(0, 3)}
     </Button>
@@ -121,18 +121,16 @@ export default function RestaurantInfo() {
     for(let i = 0; i <= 6; i++) {
       ChartJS.instances[1].data.datasets[1].data[i] = faker.datatype.number({ min: 0, max: 200 })
     }
-    // ChartJS.instances[1].data.datasets[0].data.forEach(element => {
-    //   console.log(element)
-    //   element = faker.datatype.number({ min: 0, max: 200 })
-    // });
-    // ChartJS.instances[1].data.datasets[0].data[0] = faker.datatype.number({ min: 0, max: 200 })
     ChartJS.instances[1].update();
   }
 
   return (
     <MenuComponentBox margin={"auto"}>
       <Typography variant="h3">Info</Typography>
-      <Bar options={options} data={data} redraw={true} />
+      <Container maxWidth="sm">
+        <Bar options={options} data={data} redraw={true} />
+      </Container>
+      
       <ButtonGroup variant="contained">{renderButtons}</ButtonGroup>
     </MenuComponentBox>
   );
