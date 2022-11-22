@@ -4,6 +4,7 @@ import {
   ButtonGroup,
   Divider,
   IconButton,
+  Skeleton,
   Typography,
   useMediaQuery,
   useTheme,
@@ -11,21 +12,25 @@ import {
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks/appHook';
-import { fetchDailyMenuEn } from '../redux/slices/menuSlice';
+import { fetchDailyMenu } from '../redux/slices/menuSlice';
 import { MenuComponentBox } from '../styles/menu';
 import { Course, MenuItem } from '../types/menuApiData';
+import MenuSkeleton from '../components/MenuSkeleton';
 
 export default function Menu() {
+  const today = new Date();
   useEffect(() => {
-    const today = new Date();
-    dispatch(fetchDailyMenuEn(today.toISOString().slice(0, 10)));
+    dispatch(fetchDailyMenu(today.toISOString().slice(0, 10)));
   }, []);
 
-  const { dailyMenuEn } = useAppSelector((state) => state.menuReducer);
+  const { dailyMenu, isLoading, error } = useAppSelector(
+    (state) => state.menuReducer
+  );
 
   const dispatch = useAppDispatch();
 
   const theme = useTheme();
+
   const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
   const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -45,9 +50,7 @@ export default function Menu() {
 
   const renderButtons = getWeekFromStartDay(currWeek).map((date) => (
     <Button
-      onClick={() =>
-        dispatch(fetchDailyMenuEn(date.toISOString().slice(0, 10)))
-      }
+      onClick={() => dispatch(fetchDailyMenu(date.toISOString().slice(0, 10)))}
     >
       {date.toString().slice(0, 3)}
     </Button>
@@ -72,7 +75,7 @@ export default function Menu() {
       return meals;
     }
   }
-  const renderMenuContent = populateCourseList(dailyMenuEn.courses).map(
+  const renderMenuContent = populateCourseList(dailyMenu.courses).map(
     (meal) => (
       <Box key={meal.category}>
         <Box
@@ -98,12 +101,13 @@ export default function Menu() {
             >
               {meal.title_en}
             </Typography>
-            <Typography variant='subtitle1'>
+            <Typography> Prices: {meal.price}</Typography>
+            {/* <Typography variant='subtitle1'>
               {meal.price.split('/')[0]}
             </Typography>
             <Typography variant='subtitle1'>
               {meal.price.split('/')[1]}
-            </Typography>
+            </Typography> */}
           </Box>
           <Box margin={'auto 0'}>
             <IconButton>
@@ -128,7 +132,7 @@ export default function Menu() {
           fontWeight: '800',
         }}
       >
-        {dailyMenuEn.meta.ref_title}
+        {dailyMenu.meta.ref_title}
       </Typography>
       <Box
         display={'flex'}
@@ -162,7 +166,19 @@ export default function Menu() {
           )}
         </ButtonGroup>
       </Box>
-      <Box sx={{}}>{renderMenuContent}</Box>
+      {isLoading && <MenuSkeleton items={6} sx={{ mt: 1 }} />}
+      {!isLoading && populateCourseList(dailyMenu.courses).length ? (
+        <Box sx={{ mt: 1 }}>{renderMenuContent}</Box>
+      ) : (
+        <></>
+      )}
+      {!isLoading && !populateCourseList(dailyMenu.courses).length ? (
+        <Typography variant={'h6'} sx={{ mt: 2 }}>
+          Menu is not available for the selected date.
+        </Typography>
+      ) : (
+        <></>
+      )}
     </MenuComponentBox>
   );
 }
