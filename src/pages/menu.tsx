@@ -9,14 +9,15 @@ import {
   useTheme,
 } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks/appHook';
 import { fetchDailyMenu } from '../redux/slices/menuSlice';
 import { MenuComponentBox } from '../styles/menu';
 import { Course, MenuItem } from '../types/menuApiData';
-import { Link } from "react-router-dom";
-import MenuSkeleton from '../components/MenuSkeleton';
+import { Link } from 'react-router-dom';
+import MenuSkeleton from '../components/menu/MenuSkeleton';
+import MenuError from '../components/menu/MenuError';
 
 export default function Menu() {
   const today = new Date();
@@ -35,6 +36,7 @@ export default function Menu() {
   const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
   const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
 
+  // 1 for the initial week from monday, 8 for the next week from monday
   const [currWeek, setCurrWeek] = useState(1);
 
   function getWeekFromStartDay(start: number) {
@@ -53,7 +55,10 @@ export default function Menu() {
     <Button
       onClick={() => dispatch(fetchDailyMenu(date.toISOString().slice(0, 10)))}
     >
-      {date.toString().slice(0, 3)}
+      <Typography>
+        {date.toString().slice(0, 3)} <br /> {date.toISOString().slice(8, 10)}.
+        {date.toISOString().slice(5, 7)}
+      </Typography>
     </Button>
   ));
 
@@ -83,8 +88,8 @@ export default function Menu() {
           maxWidth={isDownMedium ? '100%' : '65%'}
           display={'flex'}
           sx={{ pt: 2, pb: 2 }}
-          alignItems={"start"}
-          justifyContent={"space-between"}
+          alignItems={'start'}
+          justifyContent={'space-between'}
         >
           <Box display={'flex'} flexDirection={'column'}>
             <Typography
@@ -116,7 +121,7 @@ export default function Menu() {
   );
 
   return (
-    <MenuComponentBox margin={"auto"}>
+    <MenuComponentBox margin={'auto'}>
       <Typography
         variant='h5'
         display={'flex'}
@@ -154,7 +159,11 @@ export default function Menu() {
                   setCurrWeek(currWeek - 7);
                 }}
               >
-                Previous week
+                {isSmall ? (
+                  <Typography>Prev week</Typography>
+                ) : (
+                  <Typography>Previous week</Typography>
+                )}
               </Button>
               {renderButtons}
             </>
@@ -168,9 +177,7 @@ export default function Menu() {
         <></>
       )}
       {!isLoading && !populateCourseList(dailyMenu.courses).length ? (
-        <Typography variant={'h6'} sx={{ mt: 2 }}>
-          Menu is not available for the selected date.
-        </Typography>
+        <MenuError />
       ) : (
         <></>
       )}
