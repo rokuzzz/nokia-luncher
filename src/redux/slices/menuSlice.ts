@@ -21,7 +21,8 @@ const initialState: MenuState = {
   //   timeperiod: '', 
   //   mealdates: []
   // },
-  dailyMenuEn: {
+  isLoading: false,
+  dailyMenu: {
     meta: {
       generated_timestamp: undefined,
       ref_url: '',
@@ -29,6 +30,7 @@ const initialState: MenuState = {
     },
     courses: {}
   },
+  error: ''
 }
 
 // export const fetchWeeklyMenuEn = createAsyncThunk(
@@ -55,11 +57,11 @@ const initialState: MenuState = {
 //   }
 // )
 
-export const fetchDailyMenuEn = createAsyncThunk(
+export const fetchDailyMenu = createAsyncThunk(
   'fetchDailyMenuEn',
   async (date:String) => {
     try{
-      const response = await axios.get(`https://www.sodexo.fi/en/ruokalistat/output/daily_json/80/${date}`)
+      const response = await axios.get(`https://www.sodexo.fi/ruokalistat/output/daily_json/80/${date}`)
       return response.data
     } catch (e) {
       console.log('Fetching English Daily Menu went wrong: ', e)
@@ -74,10 +76,28 @@ const menuSlice = createSlice({
 
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchDailyMenuEn.fulfilled, (state, action) => {
-      state.dailyMenuEn = action.payload
+    builder.addCase(fetchDailyMenu.pending, (state) => {
+      state.isLoading = true
+    }) 
+    .addCase(fetchDailyMenu.fulfilled, (state, action) => {
+      state.isLoading = false
+      state.dailyMenu = action.payload
+      state.error = ''
       return state
     })
+    .addCase(fetchDailyMenu.rejected, (state, action) => {
+      state.isLoading = false
+      state.dailyMenu = {
+        meta: {
+          generated_timestamp: undefined,
+          ref_url: '',
+          ref_title: ''
+      },
+      courses: {} 
+    }
+    state.error = action.error.message
+  })
+    
   }
 })
 
