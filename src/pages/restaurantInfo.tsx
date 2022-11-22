@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   ButtonGroup,
-  Container,
   Typography,
   useMediaQuery,
   useTheme,
@@ -22,8 +21,6 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { faker } from "@faker-js/faker";
-import { maxWidth } from "@mui/system";
-import React from "react";
 
 ChartJS.register(
   CategoryScale,
@@ -168,12 +165,9 @@ export default function RestaurantInfo() {
     dispatch(fetchDailyMenu(today.toISOString().slice(0, 10)));
   }, []);
 
-  const { dailyMenu } = useAppSelector((state) => state.menuReducer);
-
   const dispatch = useAppDispatch();
 
   const theme = useTheme();
-  const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [currWeek, setCurrWeek] = useState(1);
 
