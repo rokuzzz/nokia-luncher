@@ -171,10 +171,6 @@ export default function RestaurantInfo() {
 
   const [currWeek, setCurrWeek] = useState(1);
 
-  const chart = Object.values(ChartJS.instances).filter(
-    (c) => c.canvas.id === "chart"
-  )[0];
-
   function getWeekFromStartDay(start: number) {
     const weekDays = [];
     const curr = new Date(); // get current date
@@ -190,12 +186,12 @@ export default function RestaurantInfo() {
   const renderButtons = getWeekFromStartDay(currWeek).map((date) => (
     <Button
       onClick={() => {
-        // console.log(Object.values(ChartJS.instances).filter((c) => c.canvas.id === 'chart')[0].data.labels as string[])
+        // console.log(Object.values(ChartJS.instances).filter((c) => c.canvas.id === 'chart')[0].data)
         // const chartData = Object.values(ChartJS.instances).filter((c) => c.canvas.id === 'chart')[0].data.labels as string[]
         // chartData.map((time) => {
         //   console.log(time)
         // })
-        updateChart(chart.data.labels as string[]);
+        updateChart(Object.values(ChartJS.instances).filter((c) => c.canvas.id === 'chart')[0].data.labels as string[]);
         // console.log(ChartJS.instances[1].data)
       }}
     >
@@ -204,8 +200,8 @@ export default function RestaurantInfo() {
   ));
 
   function updateChart(labels: string[]) {
-    const chartDataSet0 = chart.data.datasets[0];
-    const chartDataSet1 = chart.data.datasets[1];
+    const chartDataSet0 = Object.values(ChartJS.instances).filter((c) => c.canvas.id === 'chart')[0].data.datasets[0];
+    const chartDataSet1 = Object.values(ChartJS.instances).filter((c) => c.canvas.id === 'chart')[0].data.datasets[1];
     labels.map((time) => {
       // make more realistic data by having dailyVisitiors multiplied by settings
       if (time === "11:00") {
@@ -269,7 +265,7 @@ export default function RestaurantInfo() {
         });
       }
     });
-    chart.update();
+    Object.values(ChartJS.instances).filter((c) => c.canvas.id === 'chart')[0].update();
     // Object.values(ChartJS.instances).filter((c) => c.canvas.id === 'chart')[0].update()
     // ChartJS.instances[1].update();
     // Object.values(ChartJS.instances).filter((c) => c.canvas.id === 'chart').pop()
