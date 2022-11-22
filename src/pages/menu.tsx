@@ -4,7 +4,6 @@ import {
   ButtonGroup,
   Divider,
   IconButton,
-  Skeleton,
   Typography,
   useMediaQuery,
   useTheme,
@@ -102,12 +101,6 @@ export default function Menu() {
               {meal.title_en}
             </Typography>
             <Typography> Prices: {meal.price}</Typography>
-            {/* <Typography variant='subtitle1'>
-              {meal.price.split('/')[0]}
-            </Typography>
-            <Typography variant='subtitle1'>
-              {meal.price.split('/')[1]}
-            </Typography> */}
           </Box>
           <Box margin={'auto 0'}>
             <IconButton>
