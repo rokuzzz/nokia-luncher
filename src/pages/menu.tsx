@@ -170,14 +170,18 @@ export default function Menu() {
           )}
         </ButtonGroup>
       </Box>
-      {isLoading && <MenuSkeleton items={6} sx={{ mt: 1 }} />}
+      {isLoading && (
+        <Box sx={{ mt: 1 }}>
+          <MenuSkeleton items={6} />{' '}
+        </Box>
+      )}
       {!isLoading && populateCourseList(dailyMenu.courses).length ? (
         <Box sx={{ mt: 1 }}>{renderMenuContent}</Box>
       ) : (
         <></>
       )}
       {!isLoading && !populateCourseList(dailyMenu.courses).length ? (
-        <MenuError />
+        <MenuError isSmall={isSmall} />
       ) : (
         <></>
       )}

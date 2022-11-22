@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
-function MenuSkeleton({ items }: any) {
+function MenuSkeleton({ items }: {items: number}) {
   const theme = useTheme();
   const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
 
