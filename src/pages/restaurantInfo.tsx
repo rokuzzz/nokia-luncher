@@ -6,15 +6,11 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
-} from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../hooks/appHook";
-import {
-  fetchDailyMenuEn,
-  fetchWeeklyMenuEn,
-  fetchWeeklyMenuFi,
-} from "../redux/slices/menuSlice";
-import { MenuComponentBox } from "../styles/menu";
-import { useEffect, useState } from "react";
+} from '@mui/material';
+import { useAppDispatch, useAppSelector } from '../hooks/appHook';
+import { fetchDailyMenu } from '../redux/slices/menuSlice';
+import { MenuComponentBox } from '../styles/menu';
+import { useEffect, useState } from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -50,16 +46,16 @@ export const options = {
   responsive: true,
   plugins: {
     legend: {
-      position: "bottom" as const,
+      position: 'bottom' as const,
     },
     title: {
       display: true,
-      text: "Popular times",
+      text: 'Popular times',
     },
   },
 };
 
-const labels = ["11:00", "11:30", "12:00", "12:30", "13:00", "13:30"];
+const labels = ['11:00', '11:30', '12:00', '12:30', '13:00', '13:30'];
 
 const minVisitors = 10;
 const maxVisitors = 300;
@@ -168,21 +164,16 @@ export const data = {
 
 export default function RestaurantInfo() {
   useEffect(() => {
-    dispatch(fetchWeeklyMenuEn());
-    dispatch(fetchWeeklyMenuFi());
-
     const today = new Date();
-    dispatch(fetchDailyMenuEn(today.toISOString().slice(0, 10)));
+    dispatch(fetchDailyMenu(today.toISOString().slice(0, 10)));
   }, []);
 
-  const { weeklyMenuEn, weeklyMenuFi, dailyMenuEn } = useAppSelector(
-    (state) => state.menuReducer
-  );
+  const { dailyMenu } = useAppSelector((state) => state.menuReducer);
 
   const dispatch = useAppDispatch();
 
   const theme = useTheme();
-  const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+  const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [currWeek, setCurrWeek] = useState(1);
 

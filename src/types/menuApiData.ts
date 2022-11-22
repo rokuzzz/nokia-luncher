@@ -1,7 +1,9 @@
-export interface MenuApiData {
-  weeklyMenuEn: WeeklyMenuApiData,
-  weeklyMenuFi: WeeklyMenuApiData,
-  dailyMenuEn: DailyMenuApiData,
+export interface MenuState {
+  // weeklyMenuEn: WeeklyMenuApiData,
+  // weeklyMenuFi: WeeklyMenuApiData,
+  isLoading: boolean,
+  dailyMenu: DailyMenuApiData,
+  error: string | undefined
 }
 
 export interface WeeklyMenuApiData {

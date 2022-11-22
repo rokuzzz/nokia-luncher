@@ -50,7 +50,7 @@ function HamburgerMenu() {
       </Drawer>
       <IconButton
         onClick={() => setHamburgerOpen(!hamburgerOpen)}
-        sx={{ mr: 5, ml: 2 }}
+        sx={{ mr: 0 }}
       >
         <MenuIcon fontSize='medium' htmlColor='#124191' />
       </IconButton>

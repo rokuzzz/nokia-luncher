@@ -4,63 +4,39 @@ import {
   ButtonGroup,
   Divider,
   IconButton,
+  Skeleton,
   Typography,
   useMediaQuery,
   useTheme,
-} from "@mui/material";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+} from '@mui/material';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../hooks/appHook";
-import {
-  fetchDailyMenuEn,
-  fetchWeeklyMenuEn,
-  fetchWeeklyMenuFi,
-} from "../redux/slices/menuSlice";
-import { MenuComponentBox } from "../styles/menu";
-import { Course, MenuItem } from "../types/menuApiData";
+import { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../hooks/appHook';
+import { fetchDailyMenu } from '../redux/slices/menuSlice';
+import { MenuComponentBox } from '../styles/menu';
+import { Course, MenuItem } from '../types/menuApiData';
 import { Link } from "react-router-dom";
+import MenuSkeleton from '../components/MenuSkeleton';
 
 export default function Menu() {
+  const today = new Date();
   useEffect(() => {
-    dispatch(fetchWeeklyMenuEn());
-    dispatch(fetchWeeklyMenuFi());
-
-    const today = new Date();
-    dispatch(fetchDailyMenuEn(today.toISOString().slice(0, 10)));
+    dispatch(fetchDailyMenu(today.toISOString().slice(0, 10)));
   }, []);
 
-  const { weeklyMenuEn, weeklyMenuFi, dailyMenuEn } = useAppSelector(
+  const { dailyMenu, isLoading, error } = useAppSelector(
     (state) => state.menuReducer
   );
 
   const dispatch = useAppDispatch();
 
   const theme = useTheme();
-  const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
+  const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
 
   const [currWeek, setCurrWeek] = useState(1);
-
-  // let currDate = new Date();
-  // let currWeek = [];
-
-  // for (let i = 1; i <= 5; i++) {
-  //   let first = currDate.getDate() - currDate.getDay() + i;
-  //   let date = new Date(currDate.setDate(first));
-
-  //   currWeek.push(date);
-  // }
-
-  // let nextWeekDate = new Date();
-  // nextWeekDate.setDate(nextWeekDate.getDate() + 7);
-  // let nextWeek = [];
-
-  // for (let i = 1; i <= 5; i++) {
-  //   let first = nextWeekDate.getDate() - nextWeekDate.getDay() + i;
-  //   let date = new Date(nextWeekDate.setDate(first));
-
-  //   nextWeek.push(date);
-  // }
 
   function getWeekFromStartDay(start: number) {
     const weekDays = [];
@@ -76,9 +52,7 @@ export default function Menu() {
 
   const renderButtons = getWeekFromStartDay(currWeek).map((date) => (
     <Button
-      onClick={() =>
-        dispatch(fetchDailyMenuEn(date.toISOString().slice(0, 10)))
-      }
+      onClick={() => dispatch(fetchDailyMenu(date.toISOString().slice(0, 10)))}
     >
       {date.toString().slice(0, 3)}
     </Button>
@@ -103,23 +77,45 @@ export default function Menu() {
       return meals;
     }
   }
-  const renderMenuContent = populateCourseList(dailyMenuEn.courses).map(
+  const renderMenuContent = populateCourseList(dailyMenu.courses).map(
     (meal) => (
       <Box key={meal.category}>
         <Box
-          display={"flex"}
+          maxWidth={isDownMedium ? '100%' : '65%'}
+          display={'flex'}
           sx={{ pt: 2, pb: 2 }}
           alignItems={"start"}
           justifyContent={"space-between"}
         >
-          <Box display={"flex"} flexDirection={"column"}>
-            <Typography sx={{ opacity: "50%" }}> {meal.category} </Typography>
-            <Typography> {meal.title_en} </Typography>
-            <Typography> {meal.price} </Typography>
+          <Box display={'flex'} flexDirection={'column'}>
+            <Typography
+              variant='body2'
+              sx={{
+                textTransform: 'uppercase',
+                opacity: '55%',
+              }}
+            >
+              {meal.category}
+            </Typography>
+            <Typography
+              variant='subtitle2'
+              sx={{ fontWeight: '600', lineHeight: '1.3' }}
+            >
+              {meal.title_en}
+            </Typography>
+            <Typography> Prices: {meal.price}</Typography>
+            {/* <Typography variant='subtitle1'>
+              {meal.price.split('/')[0]}
+            </Typography>
+            <Typography variant='subtitle1'>
+              {meal.price.split('/')[1]}
+            </Typography> */}
           </Box>
-          <IconButton>
-            <FavoriteBorderIcon />
-          </IconButton>
+          <Box margin={'auto 0'}>
+            <IconButton>
+              <FavoriteBorderIcon />
+            </IconButton>
+          </Box>
         </Box>
         <Divider />
       </Box>
@@ -129,26 +125,27 @@ export default function Menu() {
   return (
     <MenuComponentBox margin={"auto"}>
       <Typography
-        variant="h3"
-        display={"flex"}
-        justifyContent={"center"}
-        alignContent={"center"}
+        variant='h5'
+        display={'flex'}
+        justifyContent={'center'}
+        alignContent={'center'}
         sx={{
-          mt: 2,
+          mt: 3,
+          fontWeight: '800',
         }}
       >
-        {dailyMenuEn.meta.ref_title}
+        {dailyMenu.meta.ref_title}
       </Typography>
       <Box
-        display={"flex"}
-        justifyContent={"center"}
-        alignContent={"center"}
-        sx={{ mt: 5 }}
+        display={'flex'}
+        justifyContent={'center'}
+        alignContent={'center'}
+        sx={{ mt: 2 }}
       >
         <ButtonGroup
-          variant="outlined"
-          size={isSmall ? "small" : "large"}
-          aria-label="large button group"
+          variant='contained'
+          size={isSmall ? 'small' : 'large'}
+          aria-label='large button group'
         >
           {currWeek == 1 ? (
             <>
@@ -171,27 +168,19 @@ export default function Menu() {
           )}
         </ButtonGroup>
       </Box>
-      <Box
-        display={"flex"}
-        justifyContent={"end"}
-        alignContent={"center"}
-        sx={{ mt: 5 }}
-      >
-        <IconButton style={{ margin: "0" }}>
-          <Link
-            to="/info"
-            style={{
-              textDecoration: "none",
-              color: "inherit",
-              fontSize: "0px",
-            }}
-          >
-            {" "}
-            <InfoOutlinedIcon></InfoOutlinedIcon>
-          </Link>
-        </IconButton>
-      </Box>
-      <Box sx={{}}>{renderMenuContent}</Box>
+      {isLoading && <MenuSkeleton items={6} sx={{ mt: 1 }} />}
+      {!isLoading && populateCourseList(dailyMenu.courses).length ? (
+        <Box sx={{ mt: 1 }}>{renderMenuContent}</Box>
+      ) : (
+        <></>
+      )}
+      {!isLoading && !populateCourseList(dailyMenu.courses).length ? (
+        <Typography variant={'h6'} sx={{ mt: 2 }}>
+          Menu is not available for the selected date.
+        </Typography>
+      ) : (
+        <></>
+      )}
     </MenuComponentBox>
   );
 }
