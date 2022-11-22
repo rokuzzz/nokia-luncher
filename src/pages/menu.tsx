@@ -9,11 +9,13 @@ import {
   useTheme,
 } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks/appHook';
 import { fetchDailyMenu } from '../redux/slices/menuSlice';
 import { MenuComponentBox } from '../styles/menu';
 import { Course, MenuItem } from '../types/menuApiData';
+import { Link } from "react-router-dom";
 import MenuSkeleton from '../components/MenuSkeleton';
 
 export default function Menu() {
@@ -81,8 +83,8 @@ export default function Menu() {
           maxWidth={isDownMedium ? '100%' : '65%'}
           display={'flex'}
           sx={{ pt: 2, pb: 2 }}
-          alignItems={'start'}
-          justifyContent={'space-between'}
+          alignItems={"start"}
+          justifyContent={"space-between"}
         >
           <Box display={'flex'} flexDirection={'column'}>
             <Typography
@@ -114,7 +116,7 @@ export default function Menu() {
   );
 
   return (
-    <MenuComponentBox margin={'auto'}>
+    <MenuComponentBox margin={"auto"}>
       <Typography
         variant='h5'
         display={'flex'}
