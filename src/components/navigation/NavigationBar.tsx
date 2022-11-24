@@ -51,7 +51,9 @@ function NavigationBar() {
         }}
       >
         <Toolbar>
-          {window.location.href.includes("info") == true ? (
+          <Box>
+            <Box>
+            {window.location.href.includes("info") == true ? (
             <IconButton>
               <Link
                 to="/"
@@ -68,11 +70,12 @@ function NavigationBar() {
           ) : (
             <HamburgerMenu />
           )}
+            </Box>
+          </Box>
+          
 
           <Box
-            display={"flex"}
-            alignContent={"center"}
-            sx={isSmall ? { margin: "auto" } : { ml: 2 }}
+            sx={isSmall ? { position: "absolute", left: "50%", ml: "-50px" } : { ml: 2 }}
           >
             <NokiaLogo width={"100"} />
           </Box>

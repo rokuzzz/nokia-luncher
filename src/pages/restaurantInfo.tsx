@@ -161,7 +161,7 @@ export default function RestaurantInfo() {
         </Box>
         <Box display={"flex"} sx={{ mt: 2 }}>
           <RoomOutlinedIcon></RoomOutlinedIcon>
-          <Typography>Karaportti 7</Typography>
+          <Typography>Karakaari 7A</Typography>
         </Box>
 
         {isDownMedium ? (
