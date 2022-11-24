@@ -18,6 +18,7 @@ import { MenuComponentBox } from '../styles/menu';
 import { Course, MenuItem } from '../types/menuApiData';
 import { Link } from "react-router-dom";
 import MenuSkeleton from '../components/MenuSkeleton';
+import NavigationBar from '../components/navigation/NavigationBar';
 
 export default function Menu() {
   const today = new Date();
@@ -123,64 +124,67 @@ export default function Menu() {
   );
 
   return (
-    <MenuComponentBox margin={"auto"}>
-      <Typography
-        variant='h5'
-        display={'flex'}
-        justifyContent={'center'}
-        alignContent={'center'}
-        sx={{
-          mt: 3,
-          fontWeight: '800',
-        }}
-      >
-        {dailyMenu.meta.ref_title}
-      </Typography>
-      <Box
-        display={'flex'}
-        justifyContent={'center'}
-        alignContent={'center'}
-        sx={{ mt: 2 }}
-      >
-        <ButtonGroup
-          variant='contained'
-          size={isSmall ? 'small' : 'large'}
-          aria-label='large button group'
+    <>
+      <NavigationBar></NavigationBar>
+      <MenuComponentBox margin={"auto"}>
+        <Typography
+          variant="h5"
+          display={"flex"}
+          justifyContent={"center"}
+          alignContent={"center"}
+          sx={{
+            mt: 3,
+            fontWeight: "800",
+          }}
         >
-          {currWeek == 1 ? (
-            <>
-              {renderButtons}
-              <Button onClick={() => setCurrWeek(currWeek + 7)}>
-                Next week
-              </Button>
-            </>
-          ) : (
-            <>
-              <Button
-                onClick={() => {
-                  setCurrWeek(currWeek - 7);
-                }}
-              >
-                Previous week
-              </Button>
-              {renderButtons}
-            </>
-          )}
-        </ButtonGroup>
-      </Box>
-      {isLoading && <MenuSkeleton items={6} sx={{ mt: 1 }} />}
-      {!isLoading && populateCourseList(dailyMenu.courses).length ? (
-        <Box sx={{ mt: 1 }}>{renderMenuContent}</Box>
-      ) : (
-        <></>
-      )}
-      {!isLoading && !populateCourseList(dailyMenu.courses).length ? (
-        <Typography variant={'h6'} sx={{ mt: 2 }}>
-          Menu is not available for the selected date.
+          {dailyMenu.meta.ref_title}
         </Typography>
-      ) : (
-        <></>
-      )}
-    </MenuComponentBox>
+        <Box
+          display={"flex"}
+          justifyContent={"center"}
+          alignContent={"center"}
+          sx={{ mt: 2 }}
+        >
+          <ButtonGroup
+            variant="contained"
+            size={isSmall ? "small" : "large"}
+            aria-label="large button group"
+          >
+            {currWeek == 1 ? (
+              <>
+                {renderButtons}
+                <Button onClick={() => setCurrWeek(currWeek + 7)}>
+                  Next week
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  onClick={() => {
+                    setCurrWeek(currWeek - 7);
+                  }}
+                >
+                  Previous week
+                </Button>
+                {renderButtons}
+              </>
+            )}
+          </ButtonGroup>
+        </Box>
+        {isLoading && <MenuSkeleton items={6} sx={{ mt: 1 }} />}
+        {!isLoading && populateCourseList(dailyMenu.courses).length ? (
+          <Box sx={{ mt: 1 }}>{renderMenuContent}</Box>
+        ) : (
+          <></>
+        )}
+        {!isLoading && !populateCourseList(dailyMenu.courses).length ? (
+          <Typography variant={"h6"} sx={{ mt: 2 }}>
+            Menu is not available for the selected date.
+          </Typography>
+        ) : (
+          <></>
+        )}
+      </MenuComponentBox>
+    </>
   );
 }

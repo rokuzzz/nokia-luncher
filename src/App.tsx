@@ -22,7 +22,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <NavigationBar />
+      {/* <NavigationBar /> */}
       <Toolbar />
       <Routes>
         <Route path='/' element={<Menu />} />

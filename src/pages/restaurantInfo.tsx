@@ -5,11 +5,11 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
-} from '@mui/material';
-import { useAppDispatch, useAppSelector } from '../hooks/appHook';
-import { fetchDailyMenu } from '../redux/slices/menuSlice';
-import { MenuComponentBox } from '../styles/menu';
-import { useEffect, useState } from 'react';
+} from "@mui/material";
+import { useAppDispatch, useAppSelector } from "../hooks/appHook";
+import { fetchDailyMenu } from "../redux/slices/menuSlice";
+import { MenuComponentBox } from "../styles/menu";
+import { useEffect, useState } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -21,6 +21,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { faker } from "@faker-js/faker";
+import NavigationBar from "../components/navigation/NavigationBar";
 
 ChartJS.register(
   CategoryScale,
@@ -43,16 +44,16 @@ export const options = {
   responsive: true,
   plugins: {
     legend: {
-      position: 'bottom' as const,
+      position: "bottom" as const,
     },
     title: {
       display: true,
-      text: 'Popular times',
+      text: "Popular times",
     },
   },
 };
 
-const labels = ['11:00', '11:30', '12:00', '12:30', '13:00', '13:30'];
+const labels = ["11:00", "11:30", "12:00", "12:30", "13:00", "13:30"];
 
 const minVisitors = 10;
 const maxVisitors = 300;
@@ -165,9 +166,16 @@ export default function RestaurantInfo() {
     dispatch(fetchDailyMenu(today.toISOString().slice(0, 10)));
   }, []);
 
-  const dispatch = useAppDispatch();
+  const { dailyMenu, isLoading, error } = useAppSelector(
+    (state) => state.menuReducer
+  );
 
   const theme = useTheme();
+
+  const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+  const isDownMedium = useMediaQuery(theme.breakpoints.down("md"));
+
+  const dispatch = useAppDispatch();
 
   const [currWeek, setCurrWeek] = useState(1);
 
@@ -191,7 +199,11 @@ export default function RestaurantInfo() {
         // chartData.map((time) => {
         //   console.log(time)
         // })
-        updateChart(Object.values(ChartJS.instances).filter((c) => c.canvas.id === 'chart')[0].data.labels as string[]);
+        updateChart(
+          Object.values(ChartJS.instances).filter(
+            (c) => c.canvas.id === "chart"
+          )[0].data.labels as string[]
+        );
         // console.log(ChartJS.instances[1].data)
       }}
     >
@@ -200,8 +212,12 @@ export default function RestaurantInfo() {
   ));
 
   function updateChart(labels: string[]) {
-    const chartDataSet0 = Object.values(ChartJS.instances).filter((c) => c.canvas.id === 'chart')[0].data.datasets[0];
-    const chartDataSet1 = Object.values(ChartJS.instances).filter((c) => c.canvas.id === 'chart')[0].data.datasets[1];
+    const chartDataSet0 = Object.values(ChartJS.instances).filter(
+      (c) => c.canvas.id === "chart"
+    )[0].data.datasets[0];
+    const chartDataSet1 = Object.values(ChartJS.instances).filter(
+      (c) => c.canvas.id === "chart"
+    )[0].data.datasets[1];
     labels.map((time) => {
       // make more realistic data by having dailyVisitiors multiplied by settings
       if (time === "11:00") {
@@ -265,7 +281,9 @@ export default function RestaurantInfo() {
         });
       }
     });
-    Object.values(ChartJS.instances).filter((c) => c.canvas.id === 'chart')[0].update();
+    Object.values(ChartJS.instances)
+      .filter((c) => c.canvas.id === "chart")[0]
+      .update();
     // Object.values(ChartJS.instances).filter((c) => c.canvas.id === 'chart')[0].update()
     // ChartJS.instances[1].update();
     // Object.values(ChartJS.instances).filter((c) => c.canvas.id === 'chart').pop()
@@ -273,26 +291,53 @@ export default function RestaurantInfo() {
   }
 
   return (
-    <MenuComponentBox margin={"auto"}>
-      <Typography
-        variant="h3"
-        display={"flex"}
-        justifyContent={"center"}
-        alignContent={"center"}
-        sx={{
-          mt: 2,
-        }}
-      >
-        Info
-      </Typography>
-      <Box display={"flex"} justifyContent={"center"} alignContent={"center"}>
-        <Box sx={{ mt: 5, height: "350px", width: "70%" }}>
-          <Bar options={options} data={data} redraw={true} id={"chart"} />
+    <>
+      <NavigationBar></NavigationBar>
+      <MenuComponentBox margin={"auto"}>
+        <Typography
+          variant="h5"
+          display={"flex"}
+          justifyContent={"center"}
+          alignContent={"center"}
+          sx={{
+            mt: 3,
+            fontWeight: "800",
+          }}
+        >
+          {dailyMenu.meta.ref_title}
+        </Typography>
+
+        {isDownMedium ? (
+          <Box
+            display={"flex"}
+            justifyContent={"center"}
+            alignContent={"center"}
+          >
+            <Box sx={{ mt: 5, height: "350px", width: "100%" }}>
+              <Bar options={options} data={data} redraw={true} id={"chart"} />
+            </Box>
+          </Box>
+        ) : (
+          <Box
+            display={"flex"}
+            justifyContent={"center"}
+            alignContent={"center"}
+          >
+            <Box sx={{ mt: 5, height: "350px", width: "70%" }}>
+              <Bar options={options} data={data} redraw={true} id={"chart"} />
+            </Box>
+          </Box>
+        )}
+
+        {/* <Box display={"flex"} justifyContent={"center"} alignContent={"center"}>
+      <Box sx={{ mt: 5, height: "350px", width: "100%" }}>
+        <Bar options={options} data={data} redraw={true} id={"chart"} />
+      </Box>
+    </Box> */}
+        <Box display={"flex"} justifyContent={"center"}>
+          <ButtonGroup variant="outlined">{renderButtons}</ButtonGroup>
         </Box>
-      </Box>
-      <Box display={"flex"} justifyContent={"center"}>
-        <ButtonGroup variant="outlined">{renderButtons}</ButtonGroup>
-      </Box>
-    </MenuComponentBox>
+      </MenuComponentBox>
+    </>
   );
 }
