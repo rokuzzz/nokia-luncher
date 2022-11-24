@@ -20,8 +20,6 @@ const favoritesSlice = createSlice({
         action.payload.isLiked = true
         state.push(action.payload)
       }
-    
-      state.push(action.payload)
     }
   },
   extraReducers: (builder) => {
