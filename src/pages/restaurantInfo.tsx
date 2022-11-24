@@ -22,6 +22,10 @@ import {
 import { Bar } from "react-chartjs-2";
 import { faker } from "@faker-js/faker";
 import NavigationBar from "../components/navigation/NavigationBar";
+import CircleIcon from '@mui/icons-material/Circle';
+import { color } from "@mui/system";
+import moment from "moment";
+import timesOpen from "../restaurantOpenMock.json";
 
 ChartJS.register(
   CategoryScale,
@@ -179,6 +183,9 @@ export default function RestaurantInfo() {
 
   const [currWeek, setCurrWeek] = useState(1);
 
+  // const time = new Date();
+  // console.log(time.toTimeString().slice(0,5))
+
   function getWeekFromStartDay(start: number) {
     const weekDays = [];
     const curr = new Date(); // get current date
@@ -290,6 +297,41 @@ export default function RestaurantInfo() {
     // console.log(Object.values(ChartJS.instances).filter((c) => c.canvas.id === 'chart'))
   }
 
+  function isOpen(resId: number | string) {
+    let restaurantTimes: any = [];
+    restaurantTimes = timesOpen
+
+    const date = new Date()
+    
+    const key = resId.toString();
+    const key2 = date.toLocaleDateString('en', { weekday: 'short'}).toLowerCase();
+    const keyTarget = restaurantTimes[key as keyof typeof restaurantTimes]
+
+    for(let i = 0; i < restaurantTimes.length; i++) {
+      if(restaurantTimes[i].id === resId.toString()) {
+         //Opening time
+      const openTime = restaurantTimes[i][key2 as keyof typeof keyTarget].slice(0,5)
+
+      //Closing time
+      const closeTime = restaurantTimes[i][key2 as keyof typeof keyTarget].slice(6,11)
+
+      //Current time
+      const currentTime = moment().format().slice(11,16)
+
+      //If opening time is empty (eg. Empty list or weekend)
+      if(openTime.length !== 0) {
+        if(openTime <= currentTime && closeTime > currentTime) {
+          return true
+        } else {
+          return false
+        }
+      } else {
+          return false
+      }
+      }
+    }
+  }
+
   return (
     <>
       <NavigationBar></NavigationBar>
@@ -306,6 +348,24 @@ export default function RestaurantInfo() {
         >
           {dailyMenu.meta.ref_title}
         </Typography>
+        <Box
+            display={"flex"}
+            justifyContent={"center"}
+            alignItems={"center"}
+        >
+          <CircleIcon sx={{color: "red", fontSize: "small"}}></CircleIcon>
+          <Typography>&nbsp; Low Capacity &nbsp;</Typography>
+          {isOpen("80") ? (
+            <>
+            <CircleIcon sx={{color: "green", fontSize: "small"}}></CircleIcon>
+            </>
+          ) : (
+            <>
+            <CircleIcon sx={{color: "gray", fontSize: "small"}}></CircleIcon>
+            </>
+          )}
+          <Typography> &nbsp;Open: 11:00-13:30</Typography>
+        </Box>
 
         {isDownMedium ? (
           <Box
