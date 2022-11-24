@@ -14,10 +14,11 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks/appHook';
 import { fetchDailyMenu } from '../redux/slices/menuSlice';
 import { MenuComponentBox } from '../styles/menu';
-import { Course, MenuItem } from '../types/menuApiData';
+import { Course, MenuItem, MenuItemInFavorites } from '../types/menu';
 import { Link } from 'react-router-dom';
 import MenuSkeleton from '../components/menu/MenuSkeleton';
 import MenuError from '../components/menu/MenuError';
+import { addRemoveFavorites } from '../redux/slices/favoritesSlice';
 
 export default function Menu() {
   const today = new Date();
@@ -81,6 +82,8 @@ export default function Menu() {
       return meals;
     }
   }
+
+  let isLiked = false;
   const renderMenuContent = populateCourseList(dailyMenu.courses).map(
     (meal) => (
       <Box key={meal.category}>
@@ -110,7 +113,20 @@ export default function Menu() {
             <Typography> Prices: {meal.price}</Typography>
           </Box>
           <Box margin={'auto 0'}>
-            <IconButton>
+            <IconButton
+              onClick={() =>
+                dispatch(
+                  addRemoveFavorites({
+                    title_en: meal.title_en,
+                    title_fi: meal.title_fi,
+                    category: meal.category,
+                    price: meal.price,
+                    additionalDietInfo: meal.additionalDietInfo,
+                    isLiked,
+                  })
+                )
+              }
+            >
               <FavoriteBorderIcon />
             </IconButton>
           </Box>

@@ -1,4 +1,4 @@
-import { MenuState } from '../../types/menuApiData';
+import { MenuState } from '../../types/menu';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 
