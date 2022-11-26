@@ -9,6 +9,7 @@ import {
   useTheme,
 } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks/appHook';
@@ -28,6 +29,10 @@ export default function Menu() {
 
   const { dailyMenu, isLoading, error } = useAppSelector(
     (state) => state.menuReducer
+  );
+
+  const { itemsInFavorites } = useAppSelector(
+    (state) => state.favoritesReducer
   );
 
   const dispatch = useAppDispatch();
@@ -127,7 +132,7 @@ export default function Menu() {
                 )
               }
             >
-              <FavoriteBorderIcon />
+              { isLiked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
             </IconButton>
           </Box>
         </Box>

@@ -13,6 +13,9 @@ export interface MenuItem{
 export interface MenuItemInFavorites extends MenuItem {
   isLiked: boolean
 }
+export interface FavoritesState {
+  itemsInFavorites: MenuItemInFavorites[]
+}
 
 export type Course = {
   [key: string]: MenuItem
