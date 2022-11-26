@@ -13,12 +13,12 @@ const favoritesSlice = createSlice({
   reducers: {
     addRemoveFavorites: (state, action: PayloadAction<MenuItemInFavorites>) => {
       
-      const itemIndex = state.itemsInFavorites.findIndex((item) => item.title_fi = action.payload.title_fi)
+      const itemIndex = state.itemsInFavorites.findIndex((item) => item.title_fi === action.payload.title_fi)
 
       if (itemIndex < 0) {
         const newItem = {...action.payload, isLiked: true}
         state.itemsInFavorites.push(newItem)
-      } else {
+      } else if (itemIndex >= 0) {
         state.itemsInFavorites[itemIndex].isLiked = false
         state.itemsInFavorites.splice(itemIndex, 1)
       }

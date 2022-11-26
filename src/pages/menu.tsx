@@ -132,7 +132,7 @@ export default function Menu() {
                 )
               }
             >
-              { isLiked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+              { itemsInFavorites.findIndex(item => item.title_fi === meal.title_fi) >= 0 ? <FavoriteIcon /> : <FavoriteBorderIcon />}
             </IconButton>
           </Box>
         </Box>
