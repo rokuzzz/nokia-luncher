@@ -1,7 +1,7 @@
 import { MenuItemInFavorites, FavoritesState } from './../../types/menu';
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { act } from 'react-dom/test-utils';
+import { toast } from 'react-toastify';
 
 const initialState: FavoritesState = {
   itemsInFavorites: []
@@ -18,9 +18,17 @@ const favoritesSlice = createSlice({
       if (itemIndex < 0) {
         const newItem = {...action.payload, isLiked: true}
         state.itemsInFavorites.push(newItem)
+        toast.info('item added to favorites', {
+          position: 'bottom-right',
+          autoClose: 3000
+        })
       } else if (itemIndex >= 0) {
         state.itemsInFavorites[itemIndex].isLiked = false
         state.itemsInFavorites.splice(itemIndex, 1)
+        toast.error('menu item removed from favorites', {
+          position: 'bottom-right',
+          autoClose: 3000
+        })
       }
     }
   },
