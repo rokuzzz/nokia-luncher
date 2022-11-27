@@ -172,7 +172,11 @@ export default function Menu() {
           >
             {dailyMenu.meta.ref_title}
           </Typography>
-          <IconButton>
+          <IconButton
+            sx={{
+              mt: 1,
+            }}
+          >
             <Link
               to='/info'
               style={{ textDecoration: 'none', color: 'inherit' }}
