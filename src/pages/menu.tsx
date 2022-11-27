@@ -4,6 +4,7 @@ import {
   ButtonGroup,
   Divider,
   IconButton,
+  Stack,
   Typography,
   useMediaQuery,
   useTheme,
@@ -20,6 +21,7 @@ import { Link } from 'react-router-dom';
 import MenuSkeleton from '../components/menu/MenuSkeleton';
 import MenuError from '../components/menu/MenuError';
 import { addRemoveFavorites } from '../redux/slices/favoritesSlice';
+import NavigationBar from '../components/navigation/NavigationBar';
 
 export default function Menu() {
   const today = new Date();
@@ -152,84 +154,90 @@ export default function Menu() {
   );
 
   return (
-    <MenuComponentBox margin={'auto'}>
-      <Box
-        display={'flex'}
-        flexDirection={'row'}
-        justifyContent='center'
-        sx={{ width: '100%' }}
-      >
-        <Typography
-          variant='h5'
-          sx={{
-            mt: 3,
-            fontWeight: '800',
-          }}
+    <>
+      <NavigationBar></NavigationBar>
+      <MenuComponentBox margin={'auto'}>
+        <Box
+          display={'flex'}
+          flexDirection={'row'}
+          justifyContent='center'
+          sx={{ width: '100%' }}
         >
-          {dailyMenu.meta.ref_title}
-        </Typography>
-        <IconButton>
-          <Link to='/info' style={{ textDecoration: 'none', color: 'inherit' }}>
-            <InfoIcon />
-          </Link>
-        </IconButton>
-      </Box>
-
-      <Box
-        display={'flex'}
-        justifyContent={'center'}
-        alignContent={'center'}
-        sx={{ mt: 2 }}
-      >
-        <ButtonGroup
-          variant='contained'
-          size={isSmall ? 'small' : 'large'}
-          aria-label='large button group'
-        >
-          {currWeek == 1 ? (
-            <>
-              {renderButtons}
-              <Button onClick={() => setCurrWeek(currWeek + 7)}>
-                {isSmall ? (
-                  <Typography>Next</Typography>
-                ) : (
-                  <Typography>Next week</Typography>
-                )}
-              </Button>
-            </>
-          ) : (
-            <>
-              <Button
-                onClick={() => {
-                  setCurrWeek(currWeek - 7);
-                }}
-              >
-                {isSmall ? (
-                  <Typography>Prev</Typography>
-                ) : (
-                  <Typography>Previous week</Typography>
-                )}
-              </Button>
-              {renderButtons}
-            </>
-          )}
-        </ButtonGroup>
-      </Box>
-      {isLoading && (
-        <Box sx={{ mt: 1 }}>
-          <MenuSkeleton items={6} />{' '}
+          <Typography
+            variant='h5'
+            sx={{
+              mt: 3,
+              fontWeight: '800',
+            }}
+          >
+            {dailyMenu.meta.ref_title}
+          </Typography>
+          <IconButton>
+            <Link
+              to='/info'
+              style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+              <InfoIcon />
+            </Link>
+          </IconButton>
         </Box>
-      )}
-      {!isLoading && populateCourseList(dailyMenu.courses).length ? (
-        <Box sx={{ mt: 1 }}>{renderMenuContent}</Box>
-      ) : (
-        <></>
-      )}
-      {!isLoading && !populateCourseList(dailyMenu.courses).length ? (
-        <MenuError isSmall={isSmall} />
-      ) : (
-        <></>
-      )}
-    </MenuComponentBox>
+
+        <Box
+          display={'flex'}
+          justifyContent={'center'}
+          alignContent={'center'}
+          sx={{ mt: 2 }}
+        >
+          <ButtonGroup
+            variant='contained'
+            size={isSmall ? 'small' : 'large'}
+            aria-label='large button group'
+          >
+            {currWeek == 1 ? (
+              <>
+                {renderButtons}
+                <Button onClick={() => setCurrWeek(currWeek + 7)}>
+                  {isSmall ? (
+                    <Typography>Next</Typography>
+                  ) : (
+                    <Typography>Next week</Typography>
+                  )}
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  onClick={() => {
+                    setCurrWeek(currWeek - 7);
+                  }}
+                >
+                  {isSmall ? (
+                    <Typography>Prev</Typography>
+                  ) : (
+                    <Typography>Previous week</Typography>
+                  )}
+                </Button>
+                {renderButtons}
+              </>
+            )}
+          </ButtonGroup>
+        </Box>
+        {isLoading && (
+          <Box sx={{ mt: 1 }}>
+            <MenuSkeleton items={6} />{' '}
+          </Box>
+        )}
+        {!isLoading && populateCourseList(dailyMenu.courses).length ? (
+          <Box sx={{ mt: 1 }}>{renderMenuContent}</Box>
+        ) : (
+          <></>
+        )}
+        {!isLoading && !populateCourseList(dailyMenu.courses).length ? (
+          <MenuError isSmall={isSmall} />
+        ) : (
+          <></>
+        )}
+      </MenuComponentBox>
+    </>
   );
 }
