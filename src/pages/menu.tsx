@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import InfoIcon from '@mui/icons-material/Info';
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks/appHook';
 import { fetchDailyMenu } from '../redux/slices/menuSlice';
@@ -61,10 +61,14 @@ export default function Menu() {
     <Button
       onClick={() => dispatch(fetchDailyMenu(date.toISOString().slice(0, 10)))}
     >
-      <Typography>
-        {date.toString().slice(0, 3)} <br /> {date.toISOString().slice(8, 10)}.
-        {date.toISOString().slice(5, 7)}
-      </Typography>
+      {today === date ? (
+        <Typography>Today</Typography>
+      ) : (
+        <Typography>
+          {date.toString().slice(0, 3)} <br /> {date.toISOString().slice(8, 10)}
+          .{date.toISOString().slice(5, 7)}
+        </Typography>
+      )}
     </Button>
   ));
 
@@ -132,7 +136,13 @@ export default function Menu() {
                 )
               }
             >
-              { itemsInFavorites.findIndex(item => item.title_fi === meal.title_fi) >= 0 ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+              {itemsInFavorites.findIndex(
+                (item) => item.title_fi === meal.title_fi
+              ) >= 0 ? (
+                <FavoriteIcon />
+              ) : (
+                <FavoriteBorderIcon />
+              )}
             </IconButton>
           </Box>
         </Box>
@@ -143,18 +153,28 @@ export default function Menu() {
 
   return (
     <MenuComponentBox margin={'auto'}>
-      <Typography
-        variant='h5'
+      <Box
         display={'flex'}
-        justifyContent={'center'}
-        alignContent={'center'}
-        sx={{
-          mt: 3,
-          fontWeight: '800',
-        }}
+        flexDirection={'row'}
+        justifyContent='center'
+        sx={{ width: '100%' }}
       >
-        {dailyMenu.meta.ref_title}
-      </Typography>
+        <Typography
+          variant='h5'
+          sx={{
+            mt: 3,
+            fontWeight: '800',
+          }}
+        >
+          {dailyMenu.meta.ref_title}
+        </Typography>
+        <IconButton>
+          <Link to='/info' style={{ textDecoration: 'none', color: 'inherit' }}>
+            <InfoIcon />
+          </Link>
+        </IconButton>
+      </Box>
+
       <Box
         display={'flex'}
         justifyContent={'center'}
@@ -170,7 +190,11 @@ export default function Menu() {
             <>
               {renderButtons}
               <Button onClick={() => setCurrWeek(currWeek + 7)}>
-                Next week
+                {isSmall ? (
+                  <Typography>Next</Typography>
+                ) : (
+                  <Typography>Next week</Typography>
+                )}
               </Button>
             </>
           ) : (
@@ -181,7 +205,7 @@ export default function Menu() {
                 }}
               >
                 {isSmall ? (
-                  <Typography>Prev week</Typography>
+                  <Typography>Prev</Typography>
                 ) : (
                   <Typography>Previous week</Typography>
                 )}

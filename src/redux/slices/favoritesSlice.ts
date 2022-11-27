@@ -25,7 +25,7 @@ const favoritesSlice = createSlice({
       } else if (itemIndex >= 0) {
         state.itemsInFavorites[itemIndex].isLiked = false
         state.itemsInFavorites.splice(itemIndex, 1)
-        toast.error('menu item removed from favorites', {
+        toast.warn('menu item removed from favorites', {
           position: 'bottom-right',
           autoClose: 3000
         })
