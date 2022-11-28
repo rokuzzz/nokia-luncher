@@ -28,6 +28,7 @@ import RoomIcon from '@mui/icons-material/Room';
 import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
 import { updateChart, data, options } from '../components/chartSettings';
 import { Container } from '@mui/system';
+import { Link } from 'react-router-dom';
 
 ChartJS.register(
   CategoryScale,
@@ -136,18 +137,55 @@ export default function RestaurantInfo() {
     <>
       <NavigationBar></NavigationBar>
       <MenuComponentBox margin={"auto"}>
-        <Typography
-          variant="h5"
-          display={"flex"}
-          justifyContent={"center"}
-          alignContent={"center"}
-          sx={{
-            mt: 3,
-            fontWeight: "800",
-          }}
-        >
-          {dailyMenu.meta.ref_title}
-        </Typography>
+        {isSmall ? (
+          <Typography
+            variant="h5"
+            display={"flex"}
+            justifyContent={"center"}
+            alignContent={"center"}
+            sx={{
+              mt: 3,
+              fontWeight: "800",
+            }}
+          >
+            {dailyMenu.meta.ref_title}
+          </Typography>
+        ) : (
+          <Box
+            display={"flex"}
+            justifyContent={"center"}
+            alignItems={"center"}
+            sx={{
+              mt: 3,
+              mb: 1,
+            }}
+          >
+            <Button variant="contained" sx={{ mr: "auto"}}>
+              <Link
+                to="/"
+                style={{
+                  textDecoration: "none",
+                  color: "inherit",
+                  width: "100%",
+                  fontSize: 18
+                }}
+              >
+                Back
+              </Link>
+            </Button>
+            <Typography
+              variant="h5"
+              sx={{
+                fontWeight: "800",
+                mr: "auto",
+              }}
+            >
+              {dailyMenu.meta.ref_title}
+            </Typography>
+            <Box sx={{ width: "66.625px"}}></Box>
+          </Box>
+        )}
+
         <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
           <CircleIcon sx={{ color: "red", fontSize: "small" }}></CircleIcon>
           <Typography>&nbsp; Low Capacity &nbsp;</Typography>
@@ -166,19 +204,15 @@ export default function RestaurantInfo() {
           )}
           <Typography> &nbsp;Open: 11:00-13:30</Typography>
         </Box>
-        <Box
-          display={"flex"}
-          justifyContent={"center"}
-          alignContent={"center"}
-        >
+        <Box display={"flex"} justifyContent={"center"} alignContent={"center"}>
           <Box display={"flex"} sx={{ mt: 2 }}>
             <RoomIcon></RoomIcon>
-            <Typography sx={{marginRight: 5}}>Karakaari 7A</Typography>
+            <Typography sx={{ marginRight: 5 }}>Karakaari 7A</Typography>
             <ContactPhoneIcon></ContactPhoneIcon>
-            <Typography sx={{marginLeft: 1}}>0505244601</Typography>
+            <Typography sx={{ marginLeft: 1 }}>0505244601</Typography>
           </Box>
         </Box>
-        <Box display={"flex"} justifyContent={"center"} sx={{mt: 5}}>
+        <Box display={"flex"} justifyContent={"center"} sx={{ mt: 5 }}>
           <ButtonGroup variant="contained">{renderButtons}</ButtonGroup>
         </Box>
         <Box display={"flex"} justifyContent={"center"} alignContent={"center"}>
