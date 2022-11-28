@@ -33,7 +33,7 @@ function HamburgerMenu() {
           >
             <Link
               to='/'
-              style={{ textDecoration: 'none', color: 'inherit', fontSize: 18 }}
+              style={{ textDecoration: 'none', color: 'inherit', fontSize: 18, width: '100%' }}
             >
               Menu
             </Link>
@@ -46,7 +46,7 @@ function HamburgerMenu() {
           >
             <Link
               to='/favorites'
-              style={{ textDecoration: 'none', color: 'inherit', fontSize: 18 }}
+              style={{ textDecoration: 'none', color: 'inherit', fontSize: 18, width: '100%' }}
             >
               Favorites
             </Link>
@@ -59,7 +59,7 @@ function HamburgerMenu() {
           >
             <Link
               to='/info'
-              style={{ textDecoration: 'none', color: 'inherit', fontSize: 18 }}
+              style={{ textDecoration: 'none', color: 'inherit', fontSize: 18, width: '100%' }}
             >
               Info
             </Link>

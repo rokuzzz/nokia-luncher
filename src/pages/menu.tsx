@@ -22,11 +22,11 @@ import MenuSkeleton from '../components/menu/MenuSkeleton';
 import MenuError from '../components/menu/MenuError';
 import { addRemoveFavorites } from '../redux/slices/favoritesSlice';
 import NavigationBar from '../components/navigation/NavigationBar';
+import moment from 'moment';
 
 export default function Menu() {
-  const today = new Date();
   useEffect(() => {
-    dispatch(fetchDailyMenu(today.toISOString().slice(0, 10)));
+    dispatch(fetchDailyMenu(moment().format().slice(0, 10)));
   }, []);
 
   const { dailyMenu, isLoading, error } = useAppSelector(
@@ -44,16 +44,13 @@ export default function Menu() {
   const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
   const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
 
-  // 1 for the initial week from monday, 8 for the next week from monday
-  const [currWeek, setCurrWeek] = useState(1);
+  // 0 for the initial week from monday, 7 for the next week from monday
+  const [currWeek, setCurrWeek] = useState(0);
 
   function getWeekFromStartDay(start: number) {
     const weekDays = [];
-    const curr = new Date(); // get current date
-    const first = curr.getDate() - curr.getDay() + start;
-
-    for (let i = first; i < first + 5; i++) {
-      let day = new Date(curr.setDate(i));
+    for (let i = start; i < start + 5; i++) {
+      let day = moment().startOf('isoWeek').add(i, 'days')
       weekDays.push(day);
     }
     return weekDays;
@@ -61,14 +58,14 @@ export default function Menu() {
 
   const renderButtons = getWeekFromStartDay(currWeek).map((date) => (
     <Button
-      onClick={() => dispatch(fetchDailyMenu(date.toISOString().slice(0, 10)))}
+      onClick={() => dispatch(fetchDailyMenu(date.format().slice(0, 10)))}
     >
-      {today.toISOString().slice(8, 10) == date.toISOString().slice(8, 10) ? (
+      {moment().format().slice(0, 10) == date.format().slice(0, 10) ? (
         <Typography>Today</Typography>
       ) : (
         <Typography>
-          {date.toString().slice(0, 3)} <br /> {date.toISOString().slice(8, 10)}
-          .{date.toISOString().slice(5, 7)}
+          {date.toString().slice(0, 3)} <br /> {date.format().slice(8, 10)}
+          .{date.format().slice(5, 7)}
         </Typography>
       )}
     </Button>
@@ -119,7 +116,7 @@ export default function Menu() {
               variant='subtitle2'
               sx={{ fontWeight: '600', lineHeight: '1.3' }}
             >
-              {meal.title_en}
+              {meal.title_en.length === 0 ? meal.title_fi : meal.title_en}
             </Typography>
             <Typography> Prices: {meal.price}</Typography>
           </Box>
@@ -198,7 +195,7 @@ export default function Menu() {
             size={isSmall ? "small" : "large"}
             aria-label="large button group"
           >
-            {currWeek == 1 ? (
+            {currWeek == 0 ? (
               <>
                 {renderButtons}
                 <Button onClick={() => setCurrWeek(currWeek + 7)}>
