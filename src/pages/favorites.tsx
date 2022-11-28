@@ -44,7 +44,7 @@ export default function Favorites() {
       >
         <Box display={'flex'} flexDirection={'column'}>
           <Typography> {meal.title_en} </Typography>
-          <Typography> {meal.price} </Typography>
+          <Typography> AVAILABILITY </Typography>
         </Box>
         <IconButton
           onClick={() =>
@@ -63,7 +63,7 @@ export default function Favorites() {
           {itemsInFavorites.findIndex(
             (item) => item.title_fi === meal.title_fi
           ) >= 0 ? (
-            <FavoriteIcon />
+            <FavoriteIcon color='error'/>
           ) : (
             <FavoriteBorderIcon />
           )}

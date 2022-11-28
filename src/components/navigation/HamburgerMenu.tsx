@@ -16,7 +16,9 @@ function HamburgerMenu() {
         PaperProps={{
           elevation: 8,
           sx: {
-            width: '150px',
+            maxWidth: '270px',
+            width: '100vw',
+            height: '100%',
           },
         }}
       >
@@ -29,7 +31,10 @@ function HamburgerMenu() {
               setHamburgerOpen(false);
             }}
           >
-            <Link to='/' style={{ textDecoration: 'none', color: 'inherit' }}>
+            <Link
+              to='/'
+              style={{ textDecoration: 'none', color: 'inherit', fontSize: 18 }}
+            >
               Menu
             </Link>
           </Button>
@@ -41,9 +46,22 @@ function HamburgerMenu() {
           >
             <Link
               to='/favorites'
-              style={{ textDecoration: 'none', color: 'inherit' }}
+              style={{ textDecoration: 'none', color: 'inherit', fontSize: 18 }}
             >
               Favorites
+            </Link>
+          </Button>
+          <Button
+            color='inherit'
+            onClick={() => {
+              setHamburgerOpen(false);
+            }}
+          >
+            <Link
+              to='/info'
+              style={{ textDecoration: 'none', color: 'inherit', fontSize: 18 }}
+            >
+              Info
             </Link>
           </Button>
         </>
