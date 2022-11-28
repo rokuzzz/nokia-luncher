@@ -30,7 +30,7 @@ function HideOnScroll({ children }: Props) {
 }
 
 let isInfoPage = false;
-console.log(window.location.href)
+console.log(window.location.href);
 
 // if(window.location.href.includes('info') == true) {
 //   console.log(window.location.href)
@@ -47,37 +47,46 @@ function NavigationBar() {
     <HideOnScroll>
       <AppBar
         sx={{
-          background: "#FFFFFF",
+          background: '#FFFFFF',
         }}
       >
         <Toolbar>
           <Box>
             <Box>
-            {window.location.href.includes("info") == true ? (
-            <IconButton>
-              <Link
-                to="/"
-                style={{
-                  textDecoration: "none",
-                  color: "inherit",
-                  fontSize: "0px",
-                }}
-              >
-                {" "}
-                <ArrowBackOutlinedIcon></ArrowBackOutlinedIcon>
-              </Link>
-            </IconButton>
-          ) : (
-            <HamburgerMenu />
-          )}
+              {window.location.href.includes('info') == true ? (
+                <>
+                  {isSmall ? (
+                    <IconButton>
+                      <Link
+                        to='/'
+                        style={{
+                          textDecoration: 'none',
+                          color: 'inherit',
+                          fontSize: '0px',
+                        }}
+                      >
+                        {' '}
+                        <ArrowBackOutlinedIcon></ArrowBackOutlinedIcon>
+                      </Link>
+                    </IconButton>
+                  ) : (
+                    <HamburgerMenu />
+                  )}
+                </>
+              ) : (
+                <HamburgerMenu />
+              )}
             </Box>
           </Box>
-          
 
           <Box
-            sx={isSmall ? { position: "absolute", left: "50%", ml: "-50px" } : { ml: 2 }}
+            sx={
+              isSmall
+                ? { position: 'absolute', left: '50%', ml: '-50px' }
+                : { ml: 2 }
+            }
           >
-            <NokiaLogo width={"100"} />
+            <NokiaLogo width={'100'} />
           </Box>
           {/* <Typography sx={{background: 'black'}}>Luncher</Typography> */}
         </Toolbar>

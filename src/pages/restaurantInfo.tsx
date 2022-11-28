@@ -79,7 +79,7 @@ export default function RestaurantInfo() {
           )[0].data.labels as string[]
         );
       }}
-    >
+    > 
       {date.toString().slice(0, 3)}
     </Button>
   ));

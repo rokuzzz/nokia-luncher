@@ -141,7 +141,7 @@ export default function Menu() {
               {itemsInFavorites.findIndex(
                 (item) => item.title_fi === meal.title_fi
               ) >= 0 ? (
-                <FavoriteIcon />
+                <FavoriteIcon color='error'/>
               ) : (
                 <FavoriteBorderIcon />
               )}
