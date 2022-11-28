@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Drawer, IconButton, Toolbar } from '@mui/material';
+import { Button, Drawer, IconButton, Toolbar, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
 import { Link } from 'react-router-dom';
@@ -33,7 +33,7 @@ function HamburgerMenu() {
           >
             <Link
               to='/'
-              style={{ textDecoration: 'none', color: 'inherit', fontSize: 18 }}
+              style={{ textDecoration: 'none', color: 'inherit', fontSize: 18, width: '100%' }}
             >
               Menu
             </Link>
@@ -46,7 +46,7 @@ function HamburgerMenu() {
           >
             <Link
               to='/favorites'
-              style={{ textDecoration: 'none', color: 'inherit', fontSize: 18 }}
+              style={{ textDecoration: 'none', color: 'inherit', fontSize: 18, width: '100%' }}
             >
               Favorites
             </Link>
@@ -59,7 +59,7 @@ function HamburgerMenu() {
           >
             <Link
               to='/info'
-              style={{ textDecoration: 'none', color: 'inherit', fontSize: 18 }}
+              style={{ textDecoration: 'none', color: 'inherit', fontSize: 18, width: '100%' }}
             >
               Info
             </Link>
