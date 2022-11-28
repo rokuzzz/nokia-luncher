@@ -66,7 +66,7 @@ function NavigationBar() {
                         }}
                       >
                         {' '}
-                        <ArrowBackOutlinedIcon></ArrowBackOutlinedIcon>
+                        <ArrowBackOutlinedIcon htmlColor='#124191'></ArrowBackOutlinedIcon>
                       </Link>
                     </IconButton>
                   ) : (

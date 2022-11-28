@@ -24,8 +24,10 @@ import NavigationBar from '../components/navigation/NavigationBar';
 import CircleIcon from '@mui/icons-material/Circle';
 import moment from 'moment';
 import timesOpen from '../restaurantOpenMock.json';
-import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
+import RoomIcon from '@mui/icons-material/Room';
+import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
 import { updateChart, data, options } from '../components/chartSettings';
+import { Container } from '@mui/system';
 
 ChartJS.register(
   CategoryScale,
@@ -37,10 +39,6 @@ ChartJS.register(
 );
 
 export default function RestaurantInfo() {
-  useEffect(() => {
-    const today = new Date();
-    dispatch(fetchDailyMenu(today.toISOString().slice(0, 10)));
-  }, []);
 
   const { dailyMenu, isLoading, error } = useAppSelector(
     (state) => state.menuReducer
@@ -53,18 +51,17 @@ export default function RestaurantInfo() {
 
   const dispatch = useAppDispatch();
 
-  const [currWeek, setCurrWeek] = useState(1);
+  const [currWeek, setCurrWeek] = useState(0);
+  const [currDay, setCurrDay] = useState(moment().date())
 
+  console.log(currDay)
   // const time = new Date();
   // console.log(time.toTimeString().slice(0,5))
 
   function getWeekFromStartDay(start: number) {
     const weekDays = [];
-    const curr = new Date(); // get current date
-    const first = curr.getDate() - curr.getDay() + start;
-
-    for (let i = first; i < first + 5; i++) {
-      let day = new Date(curr.setDate(i));
+    for (let i = start; i < start + 5; i++) {
+      let day = moment().startOf('isoWeek').add(i, 'days')
       weekDays.push(day);
     }
     return weekDays;
@@ -73,14 +70,24 @@ export default function RestaurantInfo() {
   const renderButtons = getWeekFromStartDay(currWeek).map((date) => (
     <Button
       onClick={() => {
-        updateChart(
-          Object.values(ChartJS.instances).filter(
-            (c) => c.canvas.id === 'chart'
-          )[0].data.labels as string[]
-        );
-      }}
-    > 
-      {date.toString().slice(0, 3)}
+        if(date.date() !== currDay) {
+          updateChart(
+            Object.values(ChartJS.instances).filter(
+              (c) => c.canvas.id === 'chart'
+            )[0].data.labels as string[])
+            setCurrDay(date.date())
+        }
+      }
+    }
+    >
+      {moment().format().slice(0, 10) == date.format().slice(0, 10) ? (
+        <Typography>Today</Typography>
+      ) : (
+        <Typography>
+          {date.toString().slice(0, 3)} <br /> {date.format().slice(8, 10)}
+          .{date.format().slice(5, 7)}
+        </Typography>
+      )}
     </Button>
   ));
 
@@ -128,65 +135,62 @@ export default function RestaurantInfo() {
   return (
     <>
       <NavigationBar></NavigationBar>
-      <MenuComponentBox margin={'auto'}>
+      <MenuComponentBox margin={"auto"}>
         <Typography
-          variant='h5'
-          display={'flex'}
-          justifyContent={'center'}
-          alignContent={'center'}
+          variant="h5"
+          display={"flex"}
+          justifyContent={"center"}
+          alignContent={"center"}
           sx={{
             mt: 3,
-            fontWeight: '800',
+            fontWeight: "800",
           }}
         >
           {dailyMenu.meta.ref_title}
         </Typography>
-        <Box display={'flex'} justifyContent={'center'} alignItems={'center'}>
-          <CircleIcon sx={{ color: 'red', fontSize: 'small' }}></CircleIcon>
+        <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
+          <CircleIcon sx={{ color: "red", fontSize: "small" }}></CircleIcon>
           <Typography>&nbsp; Low Capacity &nbsp;</Typography>
-          {isOpen('80') ? (
+          {isOpen("80") ? (
             <>
               <CircleIcon
-                sx={{ color: 'green', fontSize: 'small' }}
+                sx={{ color: "green", fontSize: "small" }}
               ></CircleIcon>
             </>
           ) : (
             <>
               <CircleIcon
-                sx={{ color: 'gray', fontSize: 'small' }}
+                sx={{ color: "gray", fontSize: "small" }}
               ></CircleIcon>
             </>
           )}
           <Typography> &nbsp;Open: 11:00-13:30</Typography>
         </Box>
-        <Box display={'flex'} sx={{ mt: 2 }}>
-          <RoomOutlinedIcon></RoomOutlinedIcon>
-          <Typography>Karakaari 7A</Typography>
+        <Box
+          display={"flex"}
+          justifyContent={"center"}
+          alignContent={"center"}
+        >
+          <Box display={"flex"} sx={{ mt: 2 }}>
+            <RoomIcon></RoomIcon>
+            <Typography sx={{marginRight: 5}}>Karakaari 7A</Typography>
+            <ContactPhoneIcon></ContactPhoneIcon>
+            <Typography sx={{marginLeft: 1}}>0505244601</Typography>
+          </Box>
         </Box>
-
-        {isDownMedium ? (
-          <Box
-            display={'flex'}
-            justifyContent={'center'}
-            alignContent={'center'}
-          >
-            <Box sx={{ mt: 5, height: '350px', width: '100%' }}>
-              <Bar options={options} data={data} redraw={true} id={'chart'} />
+        <Box display={"flex"} justifyContent={"center"} sx={{mt: 5}}>
+          <ButtonGroup variant="contained">{renderButtons}</ButtonGroup>
+        </Box>
+        <Box display={"flex"} justifyContent={"center"} alignContent={"center"}>
+          {isDownMedium ? (
+            <Box sx={{ mt: 3, height: "350px", width: "100%" }}>
+              <Bar options={options} data={data} redraw={true} id={"chart"} />
             </Box>
-          </Box>
-        ) : (
-          <Box
-            display={'flex'}
-            justifyContent={'center'}
-            alignContent={'center'}
-          >
-            <Box sx={{ mt: 5, height: '350px', width: '70%' }}>
-              <Bar options={options} data={data} redraw={true} id={'chart'} />
+          ) : (
+            <Box sx={{ mt: 3, height: "350px", width: "70%" }}>
+              <Bar options={options} data={data} redraw={true} id={"chart"} />
             </Box>
-          </Box>
-        )}
-        <Box display={'flex'} justifyContent={'center'}>
-          <ButtonGroup variant='outlined'>{renderButtons}</ButtonGroup>
+          )}
         </Box>
       </MenuComponentBox>
     </>
