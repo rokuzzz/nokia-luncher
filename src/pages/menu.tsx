@@ -156,46 +156,47 @@ export default function Menu() {
   return (
     <>
       <NavigationBar></NavigationBar>
-      <MenuComponentBox margin={'auto'}>
+      <MenuComponentBox margin={"auto"}>
         <Box
-          display={'flex'}
-          flexDirection={'row'}
-          justifyContent='center'
-          sx={{ width: '100%' }}
+          display={"flex"}
+          flexDirection={"row"}
+          justifyContent="center"
+          sx={{ width: "100%" }}
         >
           <Typography
-            variant='h5'
+            variant="h5"
             sx={{
               mt: 3,
-              fontWeight: '800',
+              fontWeight: "800",
             }}
           >
             {dailyMenu.meta.ref_title}
           </Typography>
-          <IconButton
-            sx={{
-              mt: 1,
-            }}
-          >
+          <IconButton sx={{ mt: 2 }}>
             <Link
-              to='/info'
-              style={{ textDecoration: 'none', color: 'inherit' }}
+              to="/info"
+              style={{
+                textDecoration: "none",
+                color: "inherit",
+                fontSize: "0px",
+              }}
             >
+              {" "}
               <InfoIcon />
             </Link>
           </IconButton>
         </Box>
 
         <Box
-          display={'flex'}
-          justifyContent={'center'}
-          alignContent={'center'}
+          display={"flex"}
+          justifyContent={"center"}
+          alignContent={"center"}
           sx={{ mt: 2 }}
         >
           <ButtonGroup
-            variant='contained'
-            size={isSmall ? 'small' : 'large'}
-            aria-label='large button group'
+            variant="contained"
+            size={isSmall ? "small" : "large"}
+            aria-label="large button group"
           >
             {currWeek == 1 ? (
               <>
@@ -228,7 +229,7 @@ export default function Menu() {
         </Box>
         {isLoading && (
           <Box sx={{ mt: 1 }}>
-            <MenuSkeleton items={6} />{' '}
+            <MenuSkeleton items={6} />{" "}
           </Box>
         )}
         {!isLoading && populateCourseList(dailyMenu.courses).length ? (
