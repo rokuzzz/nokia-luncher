@@ -8,6 +8,8 @@ import {
   Box,
   ButtonGroup,
   IconButton,
+  useTheme,
+  useMediaQuery,
 } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -20,12 +22,6 @@ import { addRemoveFavorites } from '../redux/slices/favoritesSlice';
 import React, { useState } from 'react';
 import NavigationBar from '../components/navigation/NavigationBar';
 
-const style = {
-  width: '100%',
-  maxWidth: 360,
-  bgcolor: 'background.paper',
-};
-
 export default function Favorites() {
   const dispatch = useAppDispatch();
 
@@ -33,41 +29,54 @@ export default function Favorites() {
     (state) => state.favoritesReducer
   );
 
+  const theme = useTheme();
+
+  const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
+  const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
+
   let isLiked = false;
   const renderFavoriteContent = itemsInFavorites.map((meal) => (
     <Box key={meal.category}>
       <Box
+        maxWidth={isDownMedium ? '100%' : '65%'}
         display={'flex'}
         sx={{ pt: 2, pb: 2 }}
         alignItems={'start'}
         justifyContent={'space-between'}
       >
         <Box display={'flex'} flexDirection={'column'}>
-          <Typography> {meal.title_en} </Typography>
+          <Typography
+            variant='subtitle2'
+            sx={{ fontWeight: '600', lineHeight: '1.3' }}
+          >
+            {meal.title_en}
+          </Typography>
           <Typography> AVAILABILITY </Typography>
         </Box>
-        <IconButton
-          onClick={() =>
-            dispatch(
-              addRemoveFavorites({
-                title_en: meal.title_en,
-                title_fi: meal.title_fi,
-                category: meal.category,
-                price: meal.price,
-                additionalDietInfo: meal.additionalDietInfo,
-                isLiked,
-              })
-            )
-          }
-        >
-          {itemsInFavorites.findIndex(
-            (item) => item.title_fi === meal.title_fi
-          ) >= 0 ? (
-            <FavoriteIcon color='error'/>
-          ) : (
-            <FavoriteBorderIcon />
-          )}
-        </IconButton>
+        <Box margin={'auto 0'}>
+          <IconButton
+            onClick={() =>
+              dispatch(
+                addRemoveFavorites({
+                  title_en: meal.title_en,
+                  title_fi: meal.title_fi,
+                  category: meal.category,
+                  price: meal.price,
+                  additionalDietInfo: meal.additionalDietInfo,
+                  isLiked,
+                })
+              )
+            }
+          >
+            {itemsInFavorites.findIndex(
+              (item) => item.title_fi === meal.title_fi
+            ) >= 0 ? (
+              <FavoriteIcon color='error' />
+            ) : (
+              <FavoriteBorderIcon />
+            )}
+          </IconButton>
+        </Box>
       </Box>
       <Divider />
     </Box>

@@ -52,34 +52,33 @@ function NavigationBar() {
       >
         <Toolbar>
           <Box>
-            <Box>
-              {window.location.href.includes('info') == true ? (
-                <>
-                  {isSmall ? (
-                    <IconButton>
-                      <Link
-                        to='/'
-                        style={{
-                          textDecoration: 'none',
-                          color: 'inherit',
-                          fontSize: '0px',
-                        }}
-                      >
-                        {' '}
-                        <ArrowBackOutlinedIcon></ArrowBackOutlinedIcon>
-                      </Link>
-                    </IconButton>
-                  ) : (
-                    <HamburgerMenu />
-                  )}
-                </>
-              ) : (
-                <HamburgerMenu />
-              )}
-            </Box>
+            {window.location.href.includes('info') == true ? (
+              <>
+                {isSmall ? (
+                  <IconButton>
+                    <Link
+                      to='/'
+                      style={{
+                        textDecoration: 'none',
+                        color: 'inherit',
+                        fontSize: '0px',
+                      }}
+                    >
+                      <ArrowBackOutlinedIcon></ArrowBackOutlinedIcon>
+                    </Link>
+                  </IconButton>
+                ) : (
+                  <HamburgerMenu />
+                )}
+              </>
+            ) : (
+              <HamburgerMenu />
+            )}
           </Box>
 
           <Box
+            display={'flex'}
+            alignContent={'center'}
             sx={
               isSmall
                 ? { position: 'absolute', left: '50%', ml: '-50px' }
@@ -88,7 +87,6 @@ function NavigationBar() {
           >
             <NokiaLogo width={'100'} />
           </Box>
-          {/* <Typography sx={{background: 'black'}}>Luncher</Typography> */}
         </Toolbar>
       </AppBar>
     </HideOnScroll>
