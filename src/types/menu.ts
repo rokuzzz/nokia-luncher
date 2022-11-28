@@ -11,8 +11,9 @@ export interface MenuItem{
 }
 
 export interface MenuItemInFavorites extends MenuItem {
-  isLiked: boolean
+  isLiked: boolean,
 }
+
 export interface FavoritesState {
   itemsInFavorites: MenuItemInFavorites[]
 }

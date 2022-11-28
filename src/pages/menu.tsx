@@ -63,7 +63,7 @@ export default function Menu() {
     <Button
       onClick={() => dispatch(fetchDailyMenu(date.toISOString().slice(0, 10)))}
     >
-      {today === date ? (
+      {today.toISOString().slice(8, 10) == date.toISOString().slice(8, 10) ? (
         <Typography>Today</Typography>
       ) : (
         <Typography>
