@@ -25,7 +25,6 @@ import NavigationBar from '../components/navigation/NavigationBar';
 import moment from 'moment';
 
 export default function Menu() {
-  console.log("effect", moment().format().slice(0, 10))
   useEffect(() => {
     dispatch(fetchDailyMenu(moment().format().slice(0, 10)));
   }, []);
@@ -117,7 +116,7 @@ export default function Menu() {
               variant='subtitle2'
               sx={{ fontWeight: '600', lineHeight: '1.3' }}
             >
-              {meal.title_en}
+              {meal.title_en.length === 0 ? meal.title_fi : meal.title_en}
             </Typography>
             <Typography> Prices: {meal.price}</Typography>
           </Box>
