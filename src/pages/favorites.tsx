@@ -14,6 +14,8 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Link } from "react-router-dom";
 import { MenuComponentBox } from "../styles/menu";
 import { Course, MenuItem } from "../types/menu";
+import { useAppDispatch, useAppSelector } from '../hooks/appHook';
+import { addRemoveFavorites } from '../redux/slices/favoritesSlice';
 
 import React, { useState } from "react";
 import NavigationBar from "../components/navigation/NavigationBar";
@@ -25,14 +27,14 @@ const style = {
 };
 
 export default function Favorites() {
-  let parsedJSON = require("../mockdata.json");
-  let favoriteMeals: MenuItem[] = [parsedJSON];
+  const dispatch = useAppDispatch();
 
-  const meals = favoriteMeals.map((meal) => (
-    <ListItem>{meal.title_en}</ListItem>
-  ));
+  const { itemsInFavorites } = useAppSelector(
+    (state) => state.favoritesReducer
+  );
 
-  const renderFavoriteContent = favoriteMeals.map((meal) => (
+  let isLiked = false;
+  const renderFavoriteContent = itemsInFavorites.map((meal) => (
     <Box key={meal.category}>
       <Box
         display={"flex"}
@@ -44,9 +46,28 @@ export default function Favorites() {
           <Typography> {meal.title_en} </Typography>
           <Typography> {meal.price} </Typography>
         </Box>
-        <IconButton>
-          <FavoriteBorderIcon />
-        </IconButton>
+        <IconButton
+              onClick={() =>
+                dispatch(
+                  addRemoveFavorites({
+                    title_en: meal.title_en,
+                    title_fi: meal.title_fi,
+                    category: meal.category,
+                    price: meal.price,
+                    additionalDietInfo: meal.additionalDietInfo,
+                    isLiked,
+                  })
+                )
+              }
+            >
+              {itemsInFavorites.findIndex(
+                (item) => item.title_fi === meal.title_fi
+              ) >= 0 ? (
+                <FavoriteIcon />
+              ) : (
+                <FavoriteBorderIcon />
+              )}
+            </IconButton>
       </Box>
       <Divider />
     </Box>
