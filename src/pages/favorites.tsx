@@ -21,6 +21,7 @@ import { addRemoveFavorites } from '../redux/slices/favoritesSlice';
 
 import React, { useState } from 'react';
 import NavigationBar from '../components/navigation/NavigationBar';
+import FavoritesEmpty from '../components/favourites/FavoritesEmpty';
 
 export default function Favorites() {
   const dispatch = useAppDispatch();
@@ -95,7 +96,11 @@ export default function Favorites() {
         >
           Favorites
         </Typography>
-        {renderFavoriteContent}
+        {itemsInFavorites.length > 0 ? (
+          <>{renderFavoriteContent}</>
+        ) : (
+          <FavoritesEmpty />
+        )}
       </MenuComponentBox>
     </>
   );
