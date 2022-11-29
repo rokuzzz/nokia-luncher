@@ -19,12 +19,19 @@ import { Course, MenuItem } from '../types/menu';
 import { useAppDispatch, useAppSelector } from '../hooks/appHook';
 import { addRemoveFavorites } from '../redux/slices/favoritesSlice';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import NavigationBar from '../components/navigation/NavigationBar';
 import FavoritesEmpty from '../components/favourites/FavoritesEmpty';
+import { fetchWeeklyMenu } from '../redux/slices/menuSlice';
 
 export default function Favorites() {
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchWeeklyMenu());
+  }, []);
+
+  const { weeklyMenu } = useAppSelector((state) => state.menuReducer);
 
   const { itemsInFavorites } = useAppSelector(
     (state) => state.favoritesReducer

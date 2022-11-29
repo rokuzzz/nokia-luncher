@@ -42,7 +42,7 @@ export default function RestaurantInfo() {
     dispatch(fetchDailyMenu(today.toISOString().slice(0, 10)));
   }, []);
 
-  const { dailyMenu, isLoading, error } = useAppSelector(
+  const { dailyMenu, dmIsLoading } = useAppSelector(
     (state) => state.menuReducer
   );
 
