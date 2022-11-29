@@ -35,11 +35,16 @@ export const fetchWeeklyMenu = createAsyncThunk(
   }
 )
 
+export interface DailyMenuProps {
+  date: string,
+  language: string
+} 
+
 export const fetchDailyMenu = createAsyncThunk(
   'fetchDailyMenu',
-  async (date:String) => {
+  async ({date, language}: DailyMenuProps) => {
     try{
-      const response = await axios.get(`https://www.sodexo.fi/ruokalistat/output/daily_json/80/${date}`)
+      const response = await axios.get(`https://www.sodexo.fi/${language}ruokalistat/output/daily_json/80/${date}`)
       return response.data
     } catch (e) {
       console.log('Fetching Daily Menu went wrong: ', e)

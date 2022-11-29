@@ -15,7 +15,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { Link } from 'react-router-dom';
 import { MenuComponentBox } from '../styles/menu';
-import { Course, MenuItem } from '../types/menu';
+import { Course, SingleMenuItem } from '../types/menu';
 import { useAppDispatch, useAppSelector } from '../hooks/appHook';
 import { addRemoveFavorites } from '../redux/slices/favoritesSlice';
 

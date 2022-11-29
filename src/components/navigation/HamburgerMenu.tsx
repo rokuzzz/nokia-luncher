@@ -16,8 +16,8 @@ function HamburgerMenu() {
         PaperProps={{
           elevation: 8,
           sx: {
-            maxWidth: '270px',
-            width: '100vw',
+            maxWidth: '220px',
+            width: '50vw',
             height: '100%',
           },
         }}
@@ -64,6 +64,7 @@ function HamburgerMenu() {
               Info
             </Link>
           </Button>
+          
         </>
       </Drawer>
       <IconButton

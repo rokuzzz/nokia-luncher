@@ -2,7 +2,7 @@ export interface AdditionalDietInfo {
   allergens: string,
 }
 
-export interface MenuItem{
+export interface SingleMenuItem{
   title_fi: string,
   title_en: string,
   category: string,
@@ -10,7 +10,7 @@ export interface MenuItem{
   price: string,
 }
 
-export interface MenuItemInFavorites extends MenuItem {
+export interface MenuItemInFavorites extends SingleMenuItem {
   isLiked: boolean,
 }
 
@@ -19,7 +19,7 @@ export interface FavoritesState {
 }
 
 export type Course = {
-  [key: string]: MenuItem
+  [key: string]: SingleMenuItem
 }
 
 export interface MenuOfTheDay{

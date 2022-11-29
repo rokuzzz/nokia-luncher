@@ -3,7 +3,11 @@ import {
   Button,
   ButtonGroup,
   Divider,
+  FormControl,
   IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
   Stack,
   Typography,
   useMediaQuery,
@@ -16,7 +20,7 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks/appHook';
 import { fetchDailyMenu } from '../redux/slices/menuSlice';
 import { MenuComponentBox } from '../styles/menu';
-import { Course, MenuItem, MenuItemInFavorites } from '../types/menu';
+import { Course, SingleMenuItem, MenuItemInFavorites } from '../types/menu';
 import { Link } from 'react-router-dom';
 import MenuSkeleton from '../components/menu/MenuSkeleton';
 import MenuError from '../components/menu/MenuError';
@@ -27,8 +31,16 @@ import moment from 'moment';
 export default function Menu() {
   const dispatch = useAppDispatch();
 
+  type Language = '' | 'en/';
+  const [language, setLanguage] = useState<Language>('');
+
   useEffect(() => {
-    dispatch(fetchDailyMenu(moment().format().slice(0, 10)));
+    dispatch(
+      fetchDailyMenu({
+        date: moment().format().slice(0, 10),
+        language: language,
+      })
+    );
   }, []);
 
   const { dailyMenu, dmIsLoading, weeklyMenu } = useAppSelector(
@@ -58,7 +70,14 @@ export default function Menu() {
 
   const renderButtons = getWeekFromStartDay(currWeek).map((date) => (
     <Button
-      onClick={() => dispatch(fetchDailyMenu(date.format().slice(0, 10)))}
+      onClick={() =>
+        dispatch(
+          fetchDailyMenu({
+            date: date.format().slice(0, 10),
+            language: language,
+          })
+        )
+      }
     >
       {moment().format().slice(0, 10) == date.format().slice(0, 10) ? (
         <Typography>
@@ -82,7 +101,7 @@ export default function Menu() {
   }
 
   function populateCourseList(courses: Course | null) {
-    let meals: MenuItem[] = [];
+    let meals: SingleMenuItem[] = [];
     if (courses != null) {
       for (let i = 1; i <= countCourses(courses); i++) {
         meals.push(courses[i]);
@@ -118,7 +137,11 @@ export default function Menu() {
               variant='subtitle2'
               sx={{ fontWeight: '600', lineHeight: '1.3' }}
             >
-              {meal.title_en.length === 0 ? meal.title_fi : meal.title_en}
+              {language
+                ? meal.title_en.length === 0
+                  ? meal.title_fi
+                  : meal.title_en
+                : meal.title_fi}
             </Typography>
             <Typography> Prices: {meal.price}</Typography>
           </Box>
@@ -226,6 +249,23 @@ export default function Menu() {
             )}
           </ButtonGroup>
         </Box>
+
+        <FormControl sx={{ mt: 2, minWidth: 170 }}>
+          <InputLabel id='select-label'>Select language</InputLabel>
+          <Select
+            labelId='select-label'
+            id='language-select'
+            label='select language'
+          >
+            <MenuItem onClick={() => setLanguage('')} value='finnish'>
+              Finnish
+            </MenuItem>
+            <MenuItem onClick={() => setLanguage('en/')} value='english'>
+              English
+            </MenuItem>
+          </Select>
+        </FormControl>
+
         {dmIsLoading && (
           <Box sx={{ mt: 1 }}>
             <MenuSkeleton items={6} />{' '}

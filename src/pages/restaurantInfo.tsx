@@ -39,7 +39,7 @@ ChartJS.register(
 export default function RestaurantInfo() {
   useEffect(() => {
     const today = new Date();
-    dispatch(fetchDailyMenu(today.toISOString().slice(0, 10)));
+    dispatch(fetchDailyMenu({date: today.toISOString().slice(0, 10), language: ''}));
   }, []);
 
   const { dailyMenu, dmIsLoading } = useAppSelector(
