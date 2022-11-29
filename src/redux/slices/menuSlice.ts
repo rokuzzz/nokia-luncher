@@ -61,7 +61,11 @@ const menuSlice = createSlice({
       state.dmIsLoading = false
       state.dailyMenu = action.payload
       return state
-    })    
+    })
+    .addCase(fetchWeeklyMenu.fulfilled, (state, action) => {
+      state.weeklyMenu = action.payload
+      return state
+    }) 
   }
 })
 
