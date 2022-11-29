@@ -80,6 +80,8 @@ function NavigationBar() {
           </Box>
 
           <Box
+            display={'flex'}
+            alignContent={'center'}
             sx={
               isSmall
                 ? { position: 'absolute', left: '50%', ml: '-50px' }
@@ -88,7 +90,6 @@ function NavigationBar() {
           >
             <NokiaLogo width={'100'} />
           </Box>
-          {/* <Typography sx={{background: 'black'}}>Luncher</Typography> */}
         </Toolbar>
       </AppBar>
     </HideOnScroll>

@@ -24,7 +24,7 @@ export type Course = {
 
 export interface MenuOfTheDay{
   date: string,
-  courses: Course[] | null,
+  courses: Course | null,
 }
 
 export interface Meta {
@@ -46,9 +46,7 @@ export interface DailyMenuApiData {
 }
 
 export interface MenuState {
-  // weeklyMenuEn: WeeklyMenuApiData,
-  // weeklyMenuFi: WeeklyMenuApiData,
-  isLoading: boolean,
+  weeklyMenu: WeeklyMenuApiData,
   dailyMenu: DailyMenuApiData,
-  error: string | undefined
+  dmIsLoading: boolean
 }

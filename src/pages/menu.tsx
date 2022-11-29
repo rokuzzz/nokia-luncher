@@ -25,19 +25,19 @@ import NavigationBar from '../components/navigation/NavigationBar';
 import moment from 'moment';
 
 export default function Menu() {
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
     dispatch(fetchDailyMenu(moment().format().slice(0, 10)));
   }, []);
 
-  const { dailyMenu, isLoading, error } = useAppSelector(
+  const { dailyMenu, dmIsLoading, weeklyMenu } = useAppSelector(
     (state) => state.menuReducer
   );
 
   const { itemsInFavorites } = useAppSelector(
     (state) => state.favoritesReducer
   );
-
-  const dispatch = useAppDispatch();
 
   const theme = useTheme();
 
@@ -50,7 +50,7 @@ export default function Menu() {
   function getWeekFromStartDay(start: number) {
     const weekDays = [];
     for (let i = start; i < start + 5; i++) {
-      let day = moment().startOf('isoWeek').add(i, 'days')
+      let day = moment().startOf('isoWeek').add(i, 'days');
       weekDays.push(day);
     }
     return weekDays;
@@ -61,11 +61,13 @@ export default function Menu() {
       onClick={() => dispatch(fetchDailyMenu(date.format().slice(0, 10)))}
     >
       {moment().format().slice(0, 10) == date.format().slice(0, 10) ? (
-        <Typography>Today</Typography>
+        <Typography>
+          this <br /> day
+        </Typography>
       ) : (
         <Typography>
-          {date.toString().slice(0, 3)} <br /> {date.format().slice(8, 10)}
-          .{date.format().slice(5, 7)}
+          {date.toString().slice(0, 3)} <br /> {date.format().slice(8, 10)}.
+          {date.format().slice(5, 7)}
         </Typography>
       )}
     </Button>
@@ -138,7 +140,7 @@ export default function Menu() {
               {itemsInFavorites.findIndex(
                 (item) => item.title_fi === meal.title_fi
               ) >= 0 ? (
-                <FavoriteIcon color='error'/>
+                <FavoriteIcon color='error' />
               ) : (
                 <FavoriteBorderIcon />
               )}
@@ -153,47 +155,47 @@ export default function Menu() {
   return (
     <>
       <NavigationBar></NavigationBar>
-      <MenuComponentBox margin={"auto"}>
+      <MenuComponentBox margin={'auto'}>
         <Box
-          display={"flex"}
-          flexDirection={"row"}
-          justifyContent="center"
-          sx={{ width: "100%" }}
+          display={'flex'}
+          flexDirection={'row'}
+          justifyContent='center'
+          sx={{ width: '100%' }}
         >
           <Typography
-            variant="h5"
+            variant='h5'
             sx={{
               mt: 3,
-              fontWeight: "800",
+              fontWeight: '800',
             }}
           >
             {dailyMenu.meta.ref_title}
           </Typography>
           <IconButton sx={{ mt: 2 }}>
             <Link
-              to="/info"
+              to='/info'
               style={{
-                textDecoration: "none",
-                color: "inherit",
-                fontSize: "0px",
+                textDecoration: 'none',
+                color: 'inherit',
+                fontSize: '0px',
               }}
             >
-              {" "}
+              {' '}
               <InfoIcon />
             </Link>
           </IconButton>
         </Box>
 
         <Box
-          display={"flex"}
-          justifyContent={"center"}
-          alignContent={"center"}
+          display={'flex'}
+          justifyContent={'center'}
+          alignContent={'center'}
           sx={{ mt: 2 }}
         >
           <ButtonGroup
-            variant="contained"
-            size={isSmall ? "small" : "large"}
-            aria-label="large button group"
+            variant='contained'
+            size={isSmall ? 'small' : 'large'}
+            aria-label='large button group'
           >
             {currWeek == 0 ? (
               <>
@@ -224,17 +226,17 @@ export default function Menu() {
             )}
           </ButtonGroup>
         </Box>
-        {isLoading && (
+        {dmIsLoading && (
           <Box sx={{ mt: 1 }}>
-            <MenuSkeleton items={6} />{" "}
+            <MenuSkeleton items={6} />{' '}
           </Box>
         )}
-        {!isLoading && populateCourseList(dailyMenu.courses).length ? (
+        {!dmIsLoading && populateCourseList(dailyMenu.courses).length ? (
           <Box sx={{ mt: 1 }}>{renderMenuContent}</Box>
         ) : (
           <></>
         )}
-        {!isLoading && !populateCourseList(dailyMenu.courses).length ? (
+        {!dmIsLoading && !populateCourseList(dailyMenu.courses).length ? (
           <MenuError isSmall={isSmall} />
         ) : (
           <></>

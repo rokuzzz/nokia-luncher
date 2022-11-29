@@ -41,7 +41,7 @@ ChartJS.register(
 
 export default function RestaurantInfo() {
 
-  const { dailyMenu, isLoading, error } = useAppSelector(
+  const { dailyMenu, dmIsLoading } = useAppSelector(
     (state) => state.menuReducer
   );
 
