@@ -52,28 +52,31 @@ function NavigationBar() {
       >
         <Toolbar>
           <Box>
-            {window.location.href.includes('info') == true ? (
-              <>
-                {isSmall ? (
-                  <IconButton>
-                    <Link
-                      to='/'
-                      style={{
-                        textDecoration: 'none',
-                        color: 'inherit',
-                        fontSize: '0px',
-                      }}
-                    >
-                      <ArrowBackOutlinedIcon></ArrowBackOutlinedIcon>
-                    </Link>
-                  </IconButton>
-                ) : (
-                  <HamburgerMenu />
-                )}
-              </>
-            ) : (
-              <HamburgerMenu />
-            )}
+            <Box>
+              {window.location.href.includes('info') == true ? (
+                <>
+                  {isSmall ? (
+                    <IconButton>
+                      <Link
+                        to='/'
+                        style={{
+                          textDecoration: 'none',
+                          color: 'inherit',
+                          fontSize: '0px',
+                        }}
+                      >
+                        {' '}
+                        <ArrowBackOutlinedIcon htmlColor='#124191'></ArrowBackOutlinedIcon>
+                      </Link>
+                    </IconButton>
+                  ) : (
+                    <HamburgerMenu />
+                  )}
+                </>
+              ) : (
+                <HamburgerMenu />
+              )}
+            </Box>
           </Box>
 
           <Box
