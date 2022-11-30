@@ -143,7 +143,7 @@ export default function Menu() {
                   : meal.title_en
                 : meal.title_fi}
             </Typography>
-            <Typography> Prices: {meal.price}</Typography>
+            <Typography>{language ? 'Prices:' : 'Hinnat:'} {meal.price}</Typography>
           </Box>
           <Box margin={'auto 0'}>
             <IconButton
