@@ -33,6 +33,7 @@ export default function Menu() {
 
   type Language = '' | 'en/';
   const [language, setLanguage] = useState<Language>('');
+  const [uiLanguage, setUiLanguage] = useState('finnish');
 
   useEffect(() => {
     dispatch(
@@ -143,7 +144,9 @@ export default function Menu() {
                   : meal.title_en
                 : meal.title_fi}
             </Typography>
-            <Typography>{language ? 'Prices:' : 'Hinnat:'} {meal.price}</Typography>
+            <Typography>
+              {language ? 'Prices:' : 'Hinnat:'} {meal.price}
+            </Typography>
           </Box>
           <Box margin={'auto 0'}>
             <IconButton
@@ -256,11 +259,24 @@ export default function Menu() {
             labelId='select-label'
             id='language-select'
             label='select language'
+            value={uiLanguage}
           >
-            <MenuItem onClick={() => setLanguage('')} value='finnish'>
+            <MenuItem
+              onClick={() => {
+                setLanguage('');
+                setUiLanguage('finnish');
+              }}
+              value='finnish'
+            >
               Finnish
             </MenuItem>
-            <MenuItem onClick={() => setLanguage('en/')} value='english'>
+            <MenuItem
+              onClick={() => {
+                setLanguage('en/');
+                setUiLanguage('english');
+              }}
+              value='english'
+            >
               English
             </MenuItem>
           </Select>
