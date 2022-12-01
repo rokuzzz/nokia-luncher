@@ -33,7 +33,7 @@ export default function Menu() {
 
   type Language = '' | 'en/';
   const [language, setLanguage] = useState<Language>('');
-  const [uiLanguage, setUiLanguage] = useState('finnish');
+  const [uiLanguage, setUiLanguage] = useState('suomi');
 
   useEffect(() => {
     dispatch(
@@ -71,6 +71,7 @@ export default function Menu() {
 
   const renderButtons = getWeekFromStartDay(currWeek).map((date) => (
     <Button
+      key={date.toString()}
       onClick={() =>
         dispatch(
           fetchDailyMenu({
@@ -116,7 +117,7 @@ export default function Menu() {
   let isLiked = false;
   const renderMenuContent = populateCourseList(dailyMenu.courses).map(
     (meal) => (
-      <Box key={meal.category}>
+      <Box key={meal.title_fi + meal.title_en + meal.category}>
         <Box
           maxWidth={isDownMedium ? '100%' : '65%'}
           display={'flex'}
@@ -264,11 +265,11 @@ export default function Menu() {
             <MenuItem
               onClick={() => {
                 setLanguage('');
-                setUiLanguage('finnish');
+                setUiLanguage('suomi');
               }}
-              value='finnish'
+              value='suomi'
             >
-              Finnish
+              Suomi
             </MenuItem>
             <MenuItem
               onClick={() => {

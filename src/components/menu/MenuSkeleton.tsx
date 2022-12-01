@@ -10,14 +10,15 @@ import {
 } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
-function MenuSkeleton({ items }: {items: number}) {
+function MenuSkeleton({ items }: { items: number }) {
   const theme = useTheme();
   const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
 
   const renderSkeleton = Array(items)
     .fill(0)
+    .map((_, i) => i)
     .map((item) => (
-      <Box>
+      <Box key={item}>
         <Box
           maxWidth={isDownMedium ? '100%' : '65%'}
           display={'flex'}

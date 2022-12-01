@@ -1,4 +1,4 @@
-import { MenuState } from '../../types/menu';
+import { DailyMenuApiData, MenuState } from '../../types/menu';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 
@@ -40,12 +40,23 @@ export interface DailyMenuProps {
   language: string
 } 
 
+// let someUniqueValue = 0;
+// function uniqueId(): number {
+//   return someUniqueValue++;
+// }
+
+// function wrapIds(data: any): any {
+
+//   return (data as any[]).map(value => ({...value, renderId: uniqueId()}))
+// }
+
 export const fetchDailyMenu = createAsyncThunk(
   'fetchDailyMenu',
   async ({date, language}: DailyMenuProps) => {
     try{
       const response = await axios.get(`https://www.sodexo.fi/${language}ruokalistat/output/daily_json/80/${date}`)
       return response.data
+      // return wrapIds(response.data)
     } catch (e) {
       console.log('Fetching Daily Menu went wrong: ', e)
     }

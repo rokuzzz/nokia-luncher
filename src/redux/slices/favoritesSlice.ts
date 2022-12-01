@@ -30,7 +30,8 @@ const favoritesSlice = createSlice({
           autoClose: 3000
         })
       }
-    }
+    },
+
   },
   extraReducers: (builder) => {
 
@@ -41,4 +42,5 @@ export const favoritesReducer = favoritesSlice.reducer
 
 export const {
   addRemoveFavorites,
+  
 } = favoritesSlice.actions
