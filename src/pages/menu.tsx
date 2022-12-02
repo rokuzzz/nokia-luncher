@@ -27,6 +27,7 @@ import MenuError from '../components/menu/MenuError';
 import { addRemoveFavorites } from '../redux/slices/favoritesSlice';
 import NavigationBar from '../components/navigation/NavigationBar';
 import moment from 'moment';
+import Footer from '../components/navigation/Footer';
 
 export default function Menu() {
   const dispatch = useAppDispatch();
@@ -299,6 +300,7 @@ export default function Menu() {
           <></>
         )}
       </MenuComponentBox>
+      <Footer />
     </>
   );
 }
