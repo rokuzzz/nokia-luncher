@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Button, IconButton, Typography } from '@mui/material';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
@@ -16,9 +16,24 @@ function Footer() {
         Nokia Luncher ® 2022
       </Typography>
       <Box display={'flex'} justifyContent={'center'} sx={{ mt: 1 }}>
-        <InstagramIcon />
-        <GitHubIcon sx={{ ml: 1 }} />
-        <LinkedInIcon sx={{ ml: 1 }} />
+        <IconButton
+          href='https://linkmix.co/12973923'
+          sx={{ textDecoration: 'none', color: 'inherit' }}
+        >
+          <InstagramIcon />
+        </IconButton>
+        <IconButton
+          href='https://linkmix.co/12973923'
+          sx={{ ml: 1, textDecoration: 'none', color: 'inherit' }}
+        >
+          <GitHubIcon />
+        </IconButton>
+        <IconButton
+          href='https://linkmix.co/12973923'
+          sx={{ ml: 1, textDecoration: 'none', color: 'inherit' }}
+        >
+          <LinkedInIcon />
+        </IconButton>
       </Box>
     </Box>
   );
