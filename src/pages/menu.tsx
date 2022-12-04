@@ -31,6 +31,7 @@ import moment from 'moment';
 import Footer from '../components/navigation/Footer';
 import ItemInfo from '../components/menu/ItemInfo';
 import UseDialogModal from '../hooks/useDialogModal';
+import BottomNav from '../components/navigation/BottomNav';
 
 export default function Menu() {
   const dispatch = useAppDispatch();
@@ -334,6 +335,7 @@ export default function Menu() {
               </Select>
             </FormControl>
             {renderMenuContent}
+            <Footer isSmall={isSmall} />
           </Box>
         ) : (
           <></>
@@ -344,7 +346,6 @@ export default function Menu() {
           <></>
         )}
       </MenuComponentBox>
-      <Footer />
     </>
   );
 }

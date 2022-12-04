@@ -6,8 +6,8 @@ function MenuError({ isSmall }: { isSmall: boolean }) {
       display={'flex'}
       flexDirection='column'
       justifyContent={isSmall ? 'start' : 'center'}
-      height={'55vh'}
-      sx={{ mt: 1}}
+      height={isSmall ? '60vh' : '55vh'}
+      sx={{ mt: 1 }}
     >
       <Typography variant='h4' alignSelf={'center'}>
         We're sorry for the inconvenience

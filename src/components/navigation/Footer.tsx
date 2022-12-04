@@ -3,14 +3,27 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
-function Footer() {
+function Footer({ isSmall }: { isSmall: boolean }) {
   return (
     <Box
       display={'flex'}
       flexDirection='column'
       justifyContent='end'
       alignContent={'end'}
-      sx={{ height: '12vh', p: 2 }}
+      sx={
+        isSmall
+          ? {
+              height: '12vh',
+              pt: 2,
+              pb: 2,
+              mb: 5,
+            }
+          : {
+              height: '12vh',
+              pt: 2,
+              pb: 2,
+            }
+      }
     >
       <Typography variant='subtitle2' alignSelf={'center'}>
         Nokia Luncher ® 2022
