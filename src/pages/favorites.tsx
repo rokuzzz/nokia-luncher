@@ -66,16 +66,18 @@ export default function Favorites() {
 
       //Loop thru each remaining menu days
       remainingDaysInWeekMenu.forEach((item) => {
-        //Check if day is null
-        if (item.courses !== null) {
-          //Count amount of courses/meals in one day
-          let coursesAmount = Object.keys(item.courses).length;
-          for (let i = 0; i < coursesAmount; i++) {
-            //if course is not empty
-            if (item.courses[i]) {
-              //if api fetched course/meal title matches one called in function
-              if (item.courses[i].title_fi == mealString) {
-                mealAvailableDate = item.date;
+        //Check if day courses is null
+        if (typeof item !== "undefined") {
+          if (item.courses !== null) {
+            //Count amount of courses/meals in one day
+            let coursesAmount = Object.keys(item.courses).length;
+            for (let i = 0; i < coursesAmount; i++) {
+              //if course is not empty
+              if (item.courses[i]) {
+                //if api fetched course/meal title matches one called in function
+                if (item.courses[i].title_fi == mealString) {
+                  mealAvailableDate = item.date;
+                }
               }
             }
           }
