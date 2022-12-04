@@ -8,9 +8,9 @@ function Footer() {
     <Box
       display={'flex'}
       flexDirection='column'
-      justifyContent='center'
-      alignContent={'center'}
-      sx={{ height: '20vh' }}
+      justifyContent='end'
+      alignContent={'end'}
+      sx={{ height: '12vh', p: 2 }}
     >
       <Typography variant='subtitle2' alignSelf={'center'}>
         Nokia Luncher ® 2022
