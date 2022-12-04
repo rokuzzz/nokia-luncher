@@ -301,7 +301,7 @@ export default function Menu() {
                 </MenuItem>
               </Select>
             </FormControl>
-            <MenuSkeleton items={6} />{' '}
+            <MenuSkeleton items={6} />
           </Box>
         )}
         {!dmIsLoading && populateCourseList(dailyMenu.courses).length ? (
