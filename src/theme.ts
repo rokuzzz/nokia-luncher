@@ -16,7 +16,7 @@ const theme = createTheme({
   },
   zIndex: {
     appBar: 1251,
-    modal: 1250,
+    modal: 1250
   },
 });
 

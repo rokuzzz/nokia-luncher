@@ -10,6 +10,14 @@ export interface SingleMenuItem{
   price: string,
 }
 
+export type OnClose = (event: {}, reason: "backdropClick" | "escapeKeyDown") => void
+
+export interface ItemInfoType{
+  menuItem: SingleMenuItem,
+  open: boolean,
+  onClose: any
+}
+
 export interface MenuItemInFavorites extends SingleMenuItem {
   isLiked: boolean,
 }

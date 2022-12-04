@@ -7,6 +7,7 @@ import {
   IconButton,
   InputLabel,
   MenuItem,
+  Modal,
   Select,
   Stack,
   Typography,
@@ -28,6 +29,8 @@ import { addRemoveFavorites } from '../redux/slices/favoritesSlice';
 import NavigationBar from '../components/navigation/NavigationBar';
 import moment from 'moment';
 import Footer from '../components/navigation/Footer';
+import ItemInfo from '../components/menu/ItemInfo';
+import UseDialogModal from '../hooks/useDialogModal';
 
 export default function Menu() {
   const dispatch = useAppDispatch();
@@ -115,7 +118,16 @@ export default function Menu() {
     }
   }
 
+  // const [infoIsOpen, setInfoIsOpen] = useState(false);
+  // const handleInfoClose = () => {
+  //   setInfoIsOpen(false);
+  // };
+
+  // const [ItemDetailDialog, showItemDetailDialog, closeItemDetailDialog] =
+  //   UseDialogModal(ItemInfo);
+
   let isLiked = false;
+
   const renderMenuContent = populateCourseList(dailyMenu.courses).map(
     (meal) => (
       <Box key={meal.title_fi + meal.title_en + meal.category}>
@@ -149,6 +161,9 @@ export default function Menu() {
             <Typography>
               {language ? 'Prices:' : 'Hinnat:'} {meal.price}
             </Typography>
+            {/* <Button variant='contained' sx={{ width: '100px' }}>
+              More
+            </Button> */}
           </Box>
           <Box margin={'auto 0'}>
             <IconButton
@@ -175,6 +190,7 @@ export default function Menu() {
             </IconButton>
           </Box>
         </Box>
+        {/* <ItemDetailDialog menuItem={meal} /> */}
         <Divider />
       </Box>
     )
@@ -254,43 +270,71 @@ export default function Menu() {
             )}
           </ButtonGroup>
         </Box>
-
-        <FormControl sx={{ mt: 2, minWidth: 170 }}>
-          <InputLabel id='select-label'>Select language</InputLabel>
-          <Select
-            labelId='select-label'
-            id='language-select'
-            label='select language'
-            value={uiLanguage}
-          >
-            <MenuItem
-              onClick={() => {
-                setLanguage('');
-                setUiLanguage('suomi');
-              }}
-              value='suomi'
-            >
-              Suomi
-            </MenuItem>
-            <MenuItem
-              onClick={() => {
-                setLanguage('en/');
-                setUiLanguage('english');
-              }}
-              value='english'
-            >
-              English
-            </MenuItem>
-          </Select>
-        </FormControl>
-
         {dmIsLoading && (
           <Box sx={{ mt: 1 }}>
+            <FormControl sx={{ mt: 2, minWidth: 170 }}>
+              <InputLabel id='select-label'>Select language</InputLabel>
+              <Select
+                labelId='select-label'
+                id='language-select'
+                label='select language'
+                value={uiLanguage}
+              >
+                <MenuItem
+                  onClick={() => {
+                    setLanguage('');
+                    setUiLanguage('suomi');
+                  }}
+                  value='suomi'
+                >
+                  Suomi
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    setLanguage('en/');
+                    setUiLanguage('english');
+                  }}
+                  value='english'
+                >
+                  English
+                </MenuItem>
+              </Select>
+            </FormControl>
             <MenuSkeleton items={6} />{' '}
           </Box>
         )}
         {!dmIsLoading && populateCourseList(dailyMenu.courses).length ? (
-          <Box sx={{ mt: 1 }}>{renderMenuContent}</Box>
+          <Box sx={{ mt: 1 }}>
+            <FormControl sx={{ mt: 2, minWidth: 170 }}>
+              <InputLabel id='select-label'>Select language</InputLabel>
+              <Select
+                labelId='select-label'
+                id='language-select'
+                label='select language'
+                value={uiLanguage}
+              >
+                <MenuItem
+                  onClick={() => {
+                    setLanguage('');
+                    setUiLanguage('suomi');
+                  }}
+                  value='suomi'
+                >
+                  Suomi
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    setLanguage('en/');
+                    setUiLanguage('english');
+                  }}
+                  value='english'
+                >
+                  English
+                </MenuItem>
+              </Select>
+            </FormControl>
+            {renderMenuContent}
+          </Box>
         ) : (
           <></>
         )}
