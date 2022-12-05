@@ -24,7 +24,7 @@ export default function Favorites() {
 
   useEffect(() => {
     dispatch(fetchWeeklyMenu());
-    
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
