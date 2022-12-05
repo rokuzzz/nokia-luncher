@@ -16,7 +16,7 @@ function Footer({ isSmall }: { isSmall: boolean }) {
               height: '12vh',
               pt: 2,
               pb: 2,
-              mb: 5,
+              mb: 6,
             }
           : {
               height: '12vh',
