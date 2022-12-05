@@ -44,11 +44,16 @@ export default function Favorites() {
   );
 
   function whenAvailable(mealString: string) {
+    let noSpecialChars = weeklyMenu.timeperiod.replace(/[^a-zA-Z0-9 ]/g, '').slice(0,4).replace(/\s/g,'');
+    if(noSpecialChars.length < 4) {
+      noSpecialChars = "0" + noSpecialChars
+      console.log(noSpecialChars)
+    }
+
+    const menuTimePeriod = moment(moment().year()+noSpecialChars.slice(2,4)+noSpecialChars.slice(0,2)).format()
     //If menu start date match current weeks start
     if (
-      weeklyMenu.timeperiod.slice(3, 5) +
-        '-' +
-        weeklyMenu.timeperiod.slice(0, 2) ==
+      menuTimePeriod.slice(5,8) + menuTimePeriod.slice(8,10) ==
       moment().startOf('isoWeek').format().slice(5, 10)
     ) {
       //Current day of week as number
@@ -83,14 +88,11 @@ export default function Favorites() {
           }
         }
       });
-
-      //moment().format('dddd') returns day of week: Full string eg. Tuesday
-
       if (mealAvailableDate == moment().format('dddd')) {
         return <Typography sx={{ color: 'green' }}>Available today</Typography>;
       } else if (mealAvailableDate !== '') {
         return (
-          <Typography sx={{ color: 'gold' }}>
+          <Typography sx={{ color: '#e89c0e' }}>
             Available on {mealAvailableDate}
           </Typography>
         );
@@ -103,45 +105,6 @@ export default function Favorites() {
       return <Typography>Availablity unknown</Typography>;
     }
   }
-
-  // //If menu start date match current weeks start
-  // if(weeklyMenu.timeperiod.slice(3,5)+"-"+weeklyMenu.timeperiod.slice(0,2) == moment().startOf('isoWeek').format().slice(5,10)) {
-
-  //   //Current day of week as number
-  //   let currDay= moment().day()-1 //0 is monday
-  //   let daysInMenu = Object.keys(weeklyMenu.mealdates).length // 5
-
-  //   let remainingDaysInWeekMenu: MenuOfTheDay[] = []
-
-  //   //List of remaining days of meals
-  //   for(let i = currDay; i < daysInMenu ;i++) {
-  //     remainingDaysInWeekMenu.push(weeklyMenu.mealdates[i])
-  //   }
-
-  //   remainingDaysInWeekMenu.forEach(item => {
-  //     let favMeals: MenuItemInFavorites[] = []
-  //     let favMealDates: string[] = []
-  //     let itemDay = item.date
-  //     if(item.courses != null) {
-  //       let coursesAmount = Object.keys(item.courses).length
-  //       for(let i = 0; i < coursesAmount; i++) {
-  //         if(item.courses[i]) {
-  //           itemsInFavorites.forEach(favMeal => {
-  //             if(favMeal.title_fi == item!!.courses!![i].title_fi) {
-  //               favMeals.push(favMeal)
-  //               favMealDates.push(itemDay)
-  //             }
-  //           })
-  //         }
-  //       }
-  //     }
-  //     for(let i = 0; i < favMeals.length; i++) {
-  //       console.log("itemName", favMeals[i].title_fi)
-  //       console.log("itemDay", favMealDates[i])
-  //     }
-  //   })
-  // }
-
   const theme = useTheme();
 
   const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
@@ -163,7 +126,9 @@ export default function Favorites() {
             variant='subtitle2'
             sx={{ fontWeight: '600', lineHeight: '1.3' }}
           >
-            {meal.title_en}
+            {meal.title_en.length === 0
+                  ? meal.title_fi
+                  : meal.title_en}
           </Typography>
           {whenAvailable(meal.title_fi)}
         </Box>
