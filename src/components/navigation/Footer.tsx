@@ -30,19 +30,19 @@ function Footer({ isSmall }: { isSmall: boolean }) {
       </Typography>
       <Box display={'flex'} justifyContent={'center'} sx={{ mt: 1 }}>
         <IconButton
-          href='https://linkmix.co/12973923'
+          href='https://linkmix.co/13049101'
           sx={{ textDecoration: 'none', color: 'inherit' }}
         >
           <InstagramIcon />
         </IconButton>
         <IconButton
-          href='https://linkmix.co/12973923'
+          href='https://linkmix.co/13049346'
           sx={{ ml: 1, textDecoration: 'none', color: 'inherit' }}
         >
           <GitHubIcon />
         </IconButton>
         <IconButton
-          href='https://linkmix.co/12973923'
+          href='https://linkmix.co/13049490'
           sx={{ ml: 1, textDecoration: 'none', color: 'inherit' }}
         >
           <LinkedInIcon />
