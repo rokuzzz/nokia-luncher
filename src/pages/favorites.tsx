@@ -67,7 +67,7 @@ export default function Favorites() {
       //Loop thru each remaining menu days
       remainingDaysInWeekMenu.forEach((item) => {
         //Check if day courses is null
-        if (typeof item !== "undefined") {
+        if (typeof item !== 'undefined') {
           if (item.courses !== null) {
             //Count amount of courses/meals in one day
             let coursesAmount = Object.keys(item.courses).length;
@@ -199,7 +199,7 @@ export default function Favorites() {
   return (
     <>
       <NavigationBar></NavigationBar>
-      <MenuComponentBox margin={'auto'}>
+      <MenuComponentBox margin={'0 0 80px 0'}>
         <Typography
           variant='h5'
           sx={{
