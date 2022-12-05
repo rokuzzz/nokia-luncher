@@ -199,7 +199,7 @@ export default function Favorites() {
   return (
     <>
       <NavigationBar></NavigationBar>
-      <MenuComponentBox margin={'0 0 80px 0'}>
+      <MenuComponentBox margin={isSmall ? '0 0 80px 0' : 'auto'}>
         <Typography
           variant='h5'
           sx={{

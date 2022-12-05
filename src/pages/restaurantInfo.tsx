@@ -137,7 +137,7 @@ export default function RestaurantInfo() {
   return (
     <>
       <NavigationBar></NavigationBar>
-      <MenuComponentBox margin={'auto'}>
+      <MenuComponentBox margin={isSmall ? 'auto auto 100px' : 'auto'}>
         {isSmall ? (
           <Typography
             variant='h5'

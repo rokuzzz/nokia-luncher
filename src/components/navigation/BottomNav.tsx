@@ -22,7 +22,7 @@ function BottomNav() {
         justifySelf: 'center',
         alignSelf: 'center',
         margin: 'auto',
-        padding: '0 0 10px',
+        padding: '10px 0 10px',
         position: 'fixed',
         bottom: 0,
         width: '96%',
