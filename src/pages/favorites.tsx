@@ -44,11 +44,16 @@ export default function Favorites() {
   );
 
   function whenAvailable(mealString: string) {
+    let noSpecialChars = weeklyMenu.timeperiod.replace(/[^a-zA-Z0-9 ]/g, '').slice(0,4).replace(/\s/g,'');
+    if(noSpecialChars.length < 4) {
+      noSpecialChars = "0" + noSpecialChars
+      console.log(noSpecialChars)
+    }
+
+    const menuTimePeriod = moment(moment().year()+noSpecialChars.slice(2,4)+noSpecialChars.slice(0,2)).format()
     //If menu start date match current weeks start
     if (
-      weeklyMenu.timeperiod.slice(3, 5) +
-        '-' +
-        weeklyMenu.timeperiod.slice(0, 2) ==
+      menuTimePeriod.slice(5,8) + menuTimePeriod.slice(8,10) ==
       moment().startOf('isoWeek').format().slice(5, 10)
     ) {
       //Current day of week as number
@@ -121,7 +126,9 @@ export default function Favorites() {
             variant='subtitle2'
             sx={{ fontWeight: '600', lineHeight: '1.3' }}
           >
-            {meal.title_en}
+            {meal.title_en.length === 0
+                  ? meal.title_fi
+                  : meal.title_en}
           </Typography>
           {whenAvailable(meal.title_fi)}
         </Box>
