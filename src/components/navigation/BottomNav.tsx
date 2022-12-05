@@ -1,9 +1,9 @@
-import { BottomNavigation, BottomNavigationAction, Box } from '@mui/material';
+import { BottomNavigation, BottomNavigationAction } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import InfoIcon from '@mui/icons-material/Info';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function BottomNav() {
   const [value, setValue] = useState(0);

@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -7,9 +9,7 @@ import {
   IconButton,
   InputLabel,
   MenuItem,
-  Modal,
   Select,
-  Stack,
   Typography,
   useMediaQuery,
   useTheme,
@@ -17,21 +17,17 @@ import {
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import InfoIcon from '@mui/icons-material/Info';
-import { useEffect, useState } from 'react';
+import moment from 'moment';
+
 import { useAppDispatch, useAppSelector } from '../hooks/appHook';
-import { fetchDailyMenu } from '../redux/slices/menuSlice';
 import { MenuComponentBox } from '../styles/menu';
-import { Course, SingleMenuItem, MenuItemInFavorites } from '../types/menu';
-import { Link } from 'react-router-dom';
+import { Course, SingleMenuItem } from '../types/menu';
+import { fetchDailyMenu } from '../redux/slices/menuSlice';
+import { addRemoveFavorites } from '../redux/slices/favoritesSlice';
 import MenuSkeleton from '../components/menu/MenuSkeleton';
 import MenuError from '../components/menu/MenuError';
-import { addRemoveFavorites } from '../redux/slices/favoritesSlice';
 import NavigationBar from '../components/navigation/NavigationBar';
-import moment from 'moment';
 import Footer from '../components/navigation/Footer';
-import ItemInfo from '../components/menu/ItemInfo';
-import UseDialogModal from '../hooks/useDialogModal';
-import BottomNav from '../components/navigation/BottomNav';
 
 export default function Menu() {
   const dispatch = useAppDispatch();
@@ -47,9 +43,11 @@ export default function Menu() {
         language: language,
       })
     );
-  }, []);
+    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [language]);
 
-  const { dailyMenu, dmIsLoading, weeklyMenu } = useAppSelector(
+  const { dailyMenu, dmIsLoading } = useAppSelector(
     (state) => state.menuReducer
   );
 
@@ -86,7 +84,7 @@ export default function Menu() {
         )
       }
     >
-      {moment().format().slice(0, 10) == date.format().slice(0, 10) ? (
+      {moment().format().slice(0, 10) === date.format().slice(0, 10) ? (
         <Typography>
           this <br /> day
         </Typography>
@@ -160,7 +158,8 @@ export default function Menu() {
                 : meal.title_fi}
             </Typography>
             <Typography>
-              {language ? 'Prices:' : 'Hinnat:'} {meal.price ? meal.price : 'unknown'}
+              {language ? 'Prices:' : 'Hinnat:'}{' '}
+              {meal.price ? meal.price : 'unknown'}
             </Typography>
             {/* <Button variant='contained' sx={{ width: '100px' }}>
               More
@@ -242,7 +241,7 @@ export default function Menu() {
             size={isSmall ? 'small' : 'large'}
             aria-label='large button group'
           >
-            {currWeek == 0 ? (
+            {currWeek === 0 ? (
               <>
                 {renderButtons}
                 <Button onClick={() => setCurrWeek(currWeek + 7)}>

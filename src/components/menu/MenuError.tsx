@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 function MenuError({ isSmall }: { isSmall: boolean }) {
   return (
