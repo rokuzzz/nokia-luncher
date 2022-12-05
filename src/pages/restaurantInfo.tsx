@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -6,10 +8,9 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { useAppDispatch, useAppSelector } from '../hooks/appHook';
-import { fetchDailyMenu } from '../redux/slices/menuSlice';
-import { MenuComponentBox } from '../styles/menu';
-import { useEffect, useState } from 'react';
+import RoomIcon from '@mui/icons-material/Room';
+import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
+import CircleIcon from '@mui/icons-material/Circle';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -20,15 +21,13 @@ import {
   Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import NavigationBar from '../components/navigation/NavigationBar';
-import CircleIcon from '@mui/icons-material/Circle';
 import moment from 'moment';
+
 import timesOpen from '../restaurantOpenMock.json';
-import RoomIcon from '@mui/icons-material/Room';
-import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
+import { useAppSelector } from '../hooks/appHook';
+import { MenuComponentBox } from '../styles/menu';
+import NavigationBar from '../components/navigation/NavigationBar';
 import { updateChart, data, options } from '../components/chartSettings';
-import { Container } from '@mui/system';
-import { Link } from 'react-router-dom';
 
 ChartJS.register(
   CategoryScale,
@@ -40,18 +39,13 @@ ChartJS.register(
 );
 
 export default function RestaurantInfo() {
-  const { dailyMenu, dmIsLoading } = useAppSelector(
-    (state) => state.menuReducer
-  );
+  const { dailyMenu } = useAppSelector((state) => state.menuReducer);
 
   const theme = useTheme();
 
   const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
   const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
 
-  const dispatch = useAppDispatch();
-
-  const [currWeek, setCurrWeek] = useState(0);
   const [currDay, setCurrDay] = useState(moment().date());
 
   console.log(currDay);
@@ -67,7 +61,7 @@ export default function RestaurantInfo() {
     return weekDays;
   }
 
-  const renderButtons = getWeekFromStartDay(currWeek).map((date) => (
+  const renderButtons = getWeekFromStartDay(0).map((date) => (
     <Button
       onClick={() => {
         if (date.date() !== currDay) {
@@ -80,7 +74,7 @@ export default function RestaurantInfo() {
         }
       }}
     >
-      {moment().format().slice(0, 10) == date.format().slice(0, 10) ? (
+      {moment().format().slice(0, 10) === date.format().slice(0, 10) ? (
         <Typography>
           This <br /> day
         </Typography>
@@ -137,7 +131,7 @@ export default function RestaurantInfo() {
   return (
     <>
       <NavigationBar></NavigationBar>
-      <MenuComponentBox margin={'auto'}>
+      <MenuComponentBox margin={isSmall ? 'auto auto 100px' : 'auto'}>
         {isSmall ? (
           <Typography
             variant='h5'

@@ -5,7 +5,6 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import theme from './theme';
-import NavigationBar from './components/navigation/NavigationBar';
 import Favorites from './pages/favorites';
 import Menu from './pages/menu';
 import Error from './pages/error';

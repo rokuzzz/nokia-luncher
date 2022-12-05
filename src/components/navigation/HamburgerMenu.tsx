@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { Button, Drawer, IconButton, Toolbar, Typography } from '@mui/material';
+import { Button, Drawer, IconButton, Toolbar } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-
 import { Link } from 'react-router-dom';
 
 function HamburgerMenu() {

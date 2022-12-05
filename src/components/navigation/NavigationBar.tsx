@@ -1,20 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   AppBar,
   Box,
   Slide,
   Toolbar,
-  Typography,
   useMediaQuery,
   useScrollTrigger,
   useTheme,
   IconButton,
 } from '@mui/material';
+import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
+import { Link } from 'react-router-dom';
 
 import { ReactComponent as NokiaLogo } from '../../assets/nokia-logo.svg';
 import HamburgerMenu from './HamburgerMenu';
-import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
-import { Link } from 'react-router-dom';
 
 interface Props {
   children: React.ReactElement;
@@ -29,7 +28,6 @@ function HideOnScroll({ children }: Props) {
   );
 }
 
-let isInfoPage = false;
 console.log(window.location.href);
 
 // if(window.location.href.includes('info') == true) {
@@ -39,8 +37,6 @@ console.log(window.location.href);
 // }
 
 function NavigationBar() {
-  const [isInfoPage, setIsInfoPage] = useState(false);
-
   const theme = useTheme();
   const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
   return (
@@ -53,7 +49,7 @@ function NavigationBar() {
         <Toolbar>
           <Box>
             <Box>
-              {window.location.href.includes('info') == true ? (
+              {window.location.href.includes('info') === true ? (
                 <>
                   {isSmall ? (
                     <IconButton>

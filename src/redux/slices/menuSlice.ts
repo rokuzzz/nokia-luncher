@@ -1,5 +1,5 @@
-import { DailyMenuApiData, MenuState } from '../../types/menu';
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { MenuState } from '../../types/menu';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const initialState: MenuState = {
