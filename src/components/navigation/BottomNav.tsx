@@ -34,14 +34,14 @@ function BottomNav() {
         onClick={() => navigate('/')}
       />
       <BottomNavigationAction
-        label='Info'
-        icon={<InfoIcon />}
-        onClick={() => navigate('/info')}
-      />
-      <BottomNavigationAction
         label='Favorites'
         icon={<FavoriteIcon />}
         onClick={() => navigate('/favorites')}
+      />
+      <BottomNavigationAction
+        label='Info'
+        icon={<InfoIcon />}
+        onClick={() => navigate('/info')}
       />
     </BottomNavigation>
   );

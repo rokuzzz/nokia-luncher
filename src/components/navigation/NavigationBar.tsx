@@ -84,7 +84,15 @@ function NavigationBar() {
                 : { ml: 2 }
             }
           >
-            <NokiaLogo width={'100'} />
+            <Link
+              to={'/'}
+              style={{
+                textDecoration: 'none',
+                color: 'inherit',
+              }}
+            >
+              <NokiaLogo width={'100'} />
+            </Link>
           </Box>
         </Toolbar>
       </AppBar>
