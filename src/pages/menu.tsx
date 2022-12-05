@@ -160,7 +160,7 @@ export default function Menu() {
                 : meal.title_fi}
             </Typography>
             <Typography>
-              {language ? 'Prices:' : 'Hinnat:'} {meal.price}
+              {language ? 'Prices:' : 'Hinnat:'} {meal.price ? meal.price : 'unknown'}
             </Typography>
             {/* <Button variant='contained' sx={{ width: '100px' }}>
               More
